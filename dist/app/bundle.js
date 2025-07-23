@@ -67255,62 +67255,55 @@ const Nt$3 = /* @__PURE__ */ getDefaultExportFromCjs$1(eventsExports);
 var streamBrowser$1 = eventsExports.EventEmitter;
 var util$9 = {};
 var types$3 = {};
-var shams$1;
-var hasRequiredShams;
-function requireShams() {
-  if (hasRequiredShams) return shams$1;
-  hasRequiredShams = 1;
-  shams$1 = function hasSymbols2() {
-    if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
-      return false;
-    }
-    if (typeof Symbol.iterator === "symbol") {
-      return true;
-    }
-    var obj = {};
-    var sym = Symbol("test");
-    var symObj = Object(sym);
-    if (typeof sym === "string") {
-      return false;
-    }
-    if (Object.prototype.toString.call(sym) !== "[object Symbol]") {
-      return false;
-    }
-    if (Object.prototype.toString.call(symObj) !== "[object Symbol]") {
-      return false;
-    }
-    var symVal = 42;
-    obj[sym] = symVal;
-    for (var _3 in obj) {
-      return false;
-    }
-    if (typeof Object.keys === "function" && Object.keys(obj).length !== 0) {
-      return false;
-    }
-    if (typeof Object.getOwnPropertyNames === "function" && Object.getOwnPropertyNames(obj).length !== 0) {
-      return false;
-    }
-    var syms = Object.getOwnPropertySymbols(obj);
-    if (syms.length !== 1 || syms[0] !== sym) {
-      return false;
-    }
-    if (!Object.prototype.propertyIsEnumerable.call(obj, sym)) {
-      return false;
-    }
-    if (typeof Object.getOwnPropertyDescriptor === "function") {
-      var descriptor = (
-        /** @type {PropertyDescriptor} */
-        Object.getOwnPropertyDescriptor(obj, sym)
-      );
-      if (descriptor.value !== symVal || descriptor.enumerable !== true) {
-        return false;
-      }
-    }
+var shams$1 = function hasSymbols2() {
+  if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
+    return false;
+  }
+  if (typeof Symbol.iterator === "symbol") {
     return true;
-  };
-  return shams$1;
-}
-var hasSymbols$2 = requireShams();
+  }
+  var obj = {};
+  var sym = Symbol("test");
+  var symObj = Object(sym);
+  if (typeof sym === "string") {
+    return false;
+  }
+  if (Object.prototype.toString.call(sym) !== "[object Symbol]") {
+    return false;
+  }
+  if (Object.prototype.toString.call(symObj) !== "[object Symbol]") {
+    return false;
+  }
+  var symVal = 42;
+  obj[sym] = symVal;
+  for (var _3 in obj) {
+    return false;
+  }
+  if (typeof Object.keys === "function" && Object.keys(obj).length !== 0) {
+    return false;
+  }
+  if (typeof Object.getOwnPropertyNames === "function" && Object.getOwnPropertyNames(obj).length !== 0) {
+    return false;
+  }
+  var syms = Object.getOwnPropertySymbols(obj);
+  if (syms.length !== 1 || syms[0] !== sym) {
+    return false;
+  }
+  if (!Object.prototype.propertyIsEnumerable.call(obj, sym)) {
+    return false;
+  }
+  if (typeof Object.getOwnPropertyDescriptor === "function") {
+    var descriptor = (
+      /** @type {PropertyDescriptor} */
+      Object.getOwnPropertyDescriptor(obj, sym)
+    );
+    if (descriptor.value !== symVal || descriptor.enumerable !== true) {
+      return false;
+    }
+  }
+  return true;
+};
+var hasSymbols$2 = shams$1;
 var shams = function hasToStringTagShams() {
   return hasSymbols$2() && !!Symbol.toStringTag;
 };
@@ -67363,7 +67356,7 @@ function requireHasSymbols() {
   if (hasRequiredHasSymbols) return hasSymbols$1;
   hasRequiredHasSymbols = 1;
   var origSymbol = typeof Symbol !== "undefined" && Symbol;
-  var hasSymbolSham = requireShams();
+  var hasSymbolSham = shams$1;
   hasSymbols$1 = function hasNativeSymbols() {
     if (typeof origSymbol !== "function") {
       return false;
@@ -188588,14 +188581,7 @@ const TokenList = ({
     ] }),
     sortedTokens.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center mt-3 w-full", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: onScrollLeft,
-            className: "rounded-full focus:outline-none",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(AiFillCaretLeft, { className: "text-0.5xl text-text-primary" })
-          }
-        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onScrollLeft, className: "rounded-full focus:outline-none", children: /* @__PURE__ */ jsxRuntimeExports.jsx(AiFillCaretLeft, { className: "text-0.5xl text-text-primary" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
@@ -188627,14 +188613,7 @@ const TokenList = ({
             ))
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: onScrollRight,
-            className: " rounded-full focus:outline-none",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(AiFillCaretRight, { className: "text-0.5xl text-text-primary" })
-          }
-        )
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onScrollRight, className: " rounded-full focus:outline-none", children: /* @__PURE__ */ jsxRuntimeExports.jsx(AiFillCaretRight, { className: "text-0.5xl text-text-primary" }) })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col text-sm p-1 mt-2", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
         "Selected Token:",

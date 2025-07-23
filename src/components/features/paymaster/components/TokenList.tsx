@@ -89,11 +89,13 @@ const TokenList: React.FC<TokenListProps> = ({
       {sortedTokens.length > 0 ? (
         <>
           <div className='flex items-center mt-3 w-full'>
-            <AiFillCaretLeft
-              className='text-2xl text-text-primary cursor-pointer'
-              onClick={onScrollLeft}
-            />
-            <div className='flex space-x-2 overflow-x-auto no-scrollbar' ref={scrollContainerRef}>
+            <button onClick={onScrollLeft} className='rounded-full focus:outline-none'>
+              <AiFillCaretLeft className='text-0.5xl text-text-primary' />
+            </button>
+            <div
+              className='flex flex-1  space-x-2 overflow-x-auto no-scrollbar'
+              ref={scrollContainerRef}
+            >
               {sortedTokens.map((token) => (
                 <div
                   key={token.token}
@@ -118,10 +120,9 @@ const TokenList: React.FC<TokenListProps> = ({
                 </div>
               ))}
             </div>
-            <AiFillCaretRight
-              className='text-2xl text-text-primary cursor-pointer'
-              onClick={onScrollRight}
-            />
+            <button onClick={onScrollRight} className=' rounded-full focus:outline-none'>
+              <AiFillCaretRight className='text-0.5xl text-text-primary' />
+            </button>
           </div>
           <div className='flex flex-col text-sm p-1 mt-2'>
             <span>

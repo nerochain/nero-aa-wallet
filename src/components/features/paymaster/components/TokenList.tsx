@@ -89,10 +89,7 @@ const TokenList: React.FC<TokenListProps> = ({
       {sortedTokens.length > 0 ? (
         <>
           <div className='flex items-center mt-3 w-full'>
-            <button
-              onClick={onScrollLeft}
-              className='rounded-full focus:outline-none'
-            >
+            <button onClick={onScrollLeft} className='rounded-full focus:outline-none'>
               <AiFillCaretLeft className='text-0.5xl text-text-primary' />
             </button>
             <div
@@ -123,10 +120,7 @@ const TokenList: React.FC<TokenListProps> = ({
                 </div>
               ))}
             </div>
-            <button
-              onClick={onScrollRight}
-              className=' rounded-full focus:outline-none'
-            >
+            <button onClick={onScrollRight} className=' rounded-full focus:outline-none'>
               <AiFillCaretRight className='text-0.5xl text-text-primary' />
             </button>
           </div>

@@ -48,7 +48,7 @@ const PaymasterPanel: React.FC = () => {
           />
         </div>
 
-        <div className='text-sm text-text-secondary'>Select Payment Method</div>
+        <div className='text-sm text-text-secondary text-left'>Select Payment Method</div>
 
         <div
           className={`relative transition-transform duration-500 ${isFlipped ? 'rotate-y-180' : ''}`}

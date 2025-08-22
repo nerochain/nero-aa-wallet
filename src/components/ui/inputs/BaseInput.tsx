@@ -28,18 +28,18 @@ const BaseInput: React.FC<BaseInputComponentProps> = ({
     onChange?.(e.target.value)
   }
 
-  const baseContainerClass = variant === 'send' ? 'w-full mb-3' : 'flex-1'
-  const baseLabelClass = 'block text-text-secondary text-1sm'
+  const baseContainerClass = variant === 'send' ? 'w-full mb-3 text-left' : 'flex-1 text-left'
+  const baseLabelClass = 'block text-text-secondary text-1sm text-left'
   const baseInputClass = `${
     variant === 'send' ? 'w-full' : ''
-  } p-2 rounded-md text-secondary border border-border-primary bg-bg-primary outline-none transition-all duration-300 ease-in-out focus:border-black`
+  } p-2 rounded-md text-secondary text-left border border-border-primary bg-bg-primary outline-none transition-all duration-300 ease-in-out focus:border-black`
   const baseErrorClass = 'text-red-500 text-xs mt-1'
   const baseHelpTextClass = 'text-text-secondary text-xs mt-1'
 
   return (
     <div className={`${baseContainerClass} ${containerClassName} ${className}`}>
       {label && <label className={`${baseLabelClass} ${labelClassName}`}>{label}</label>}
-      <div className='relative flex text-sm'>
+      <div className='relative flex text-sm text-left'>
         {leftElement && (
           <div className='absolute left-2 top-1/2 transform -translate-y-1/2'>{leftElement}</div>
         )}

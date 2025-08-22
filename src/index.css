@@ -2,6 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+/* RainbowKit reset override */
+@layer base {
+  /* Reset RainbowKit's text-align: left for all elements */
+  [data-rk] * {
+    text-align: inherit !important;
+  }
+
+  /* Default text alignment for body */
+  body {
+    text-align: left;
+  }
+
+  /* Title elements should be centered */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-align: center;
+  }
+
+  /* Override for elements that should explicitly be left */
+  .text-left {
+    text-align: left !important;
+  }
+
+  /* Override for elements that should explicitly be centered */
+  .text-center {
+    text-align: center !important;
+  }
+
+  /* Override for elements that should explicitly be right */
+  .text-right {
+    text-align: right !important;
+  }
+}
+
 @layer utilities {
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {

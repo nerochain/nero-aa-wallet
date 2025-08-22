@@ -1126,17 +1126,17 @@ process$4.env = {};
 process$4.argv = [];
 process$4.version = "";
 process$4.versions = {};
-function noop$a() {
+function noop$8() {
 }
-process$4.on = noop$a;
-process$4.addListener = noop$a;
-process$4.once = noop$a;
-process$4.off = noop$a;
-process$4.removeListener = noop$a;
-process$4.removeAllListeners = noop$a;
-process$4.emit = noop$a;
-process$4.prependListener = noop$a;
-process$4.prependOnceListener = noop$a;
+process$4.on = noop$8;
+process$4.addListener = noop$8;
+process$4.once = noop$8;
+process$4.off = noop$8;
+process$4.removeListener = noop$8;
+process$4.removeAllListeners = noop$8;
+process$4.emit = noop$8;
+process$4.prependListener = noop$8;
+process$4.prependOnceListener = noop$8;
 process$4.listeners = function(name2) {
   return [];
 };
@@ -9106,7 +9106,7 @@ function createBatchScheduler({ fn: fn2, id: id2, shouldSplitBatch, wait: wait2 
     }
   };
 }
-async function call$1(client2, args) {
+async function call(client2, args) {
   var _a2, _b2, _c3, _d2;
   const { account: account_ = client2.account, batch = Boolean((_a2 = client2.batch) == null ? void 0 : _a2.multicall), blockNumber, blockTag = "latest", accessList, blobs, code, data: data_, factory, factoryData, gas, gasPrice: gasPrice2, maxFeePerBlobGas, maxFeePerGas, maxPriorityFeePerGas, nonce, to: to2, value: value2, stateOverride, ...rest } = args;
   const account = account_ ? parseAccount(account_) : void 0;
@@ -9294,7 +9294,7 @@ async function readContract$1(client2, parameters) {
     functionName
   });
   try {
-    const { data: data2 } = await getAction$1(client2, call$1, "call")({
+    const { data: data2 } = await getAction$1(client2, call, "call")({
       ...rest,
       data: calldata,
       to: address
@@ -12345,7 +12345,7 @@ async function offchainLookup(client2, { blockNumber, blockTag, data: data2, to:
     if (!isAddressEqual(to2, sender))
       throw new OffchainLookupSenderMismatchError({ sender, to: to2 });
     const result = await ccipRequest_({ data: callData, sender, urls });
-    const { data: data_ } = await call$1(client2, {
+    const { data: data_ } = await call(client2, {
       blockNumber,
       blockTag,
       data: concat$c([
@@ -13619,7 +13619,7 @@ async function waitForTransactionReceipt(client2, {
       poll: true,
       pollingInterval,
       async onBlockNumber(blockNumber_) {
-        const done2 = (fn2) => {
+        const done = (fn2) => {
           clearTimeout(timer2);
           _unwatch();
           fn2();
@@ -13632,7 +13632,7 @@ async function waitForTransactionReceipt(client2, {
           if (receipt) {
             if (confirmations > 1 && (!receipt.blockNumber || blockNumber - receipt.blockNumber + 1n < confirmations))
               return;
-            done2(() => emit2.resolve(receipt));
+            done(() => emit2.resolve(receipt));
             return;
           }
           if (!transaction) {
@@ -13650,7 +13650,7 @@ async function waitForTransactionReceipt(client2, {
           receipt = await getAction$1(client2, getTransactionReceipt, "getTransactionReceipt")({ hash: hash3 });
           if (confirmations > 1 && (!receipt.blockNumber || blockNumber - receipt.blockNumber + 1n < confirmations))
             return;
-          done2(() => emit2.resolve(receipt));
+          done(() => emit2.resolve(receipt));
         } catch (err) {
           if (err instanceof TransactionNotFoundError || err instanceof TransactionReceiptNotFoundError) {
             if (!transaction) {
@@ -13683,7 +13683,7 @@ async function waitForTransactionReceipt(client2, {
               } else if (replacementTransaction.from === replacementTransaction.to && replacementTransaction.value === 0n) {
                 reason = "cancelled";
               }
-              done2(() => {
+              done(() => {
                 var _a2;
                 (_a2 = emit2.onReplaced) == null ? void 0 : _a2.call(emit2, {
                   reason,
@@ -13694,10 +13694,10 @@ async function waitForTransactionReceipt(client2, {
                 emit2.resolve(receipt);
               });
             } catch (err_) {
-              done2(() => emit2.reject(err_));
+              done(() => emit2.reject(err_));
             }
           } else {
-            done2(() => emit2.reject(err));
+            done(() => emit2.reject(err));
           }
         }
       }
@@ -13846,7 +13846,7 @@ async function simulateContract(client2, parameters) {
   const account = callRequest.account ? parseAccount(callRequest.account) : client2.account;
   const calldata = encodeFunctionData({ abi: abi2, args, functionName });
   try {
-    const { data: data2 } = await getAction$1(client2, call$1, "call")({
+    const { data: data2 } = await getAction$1(client2, call, "call")({
       batch: false,
       data: `${calldata}${dataSuffix ? dataSuffix.replace("0x", "") : ""}`,
       to: address,
@@ -15455,7 +15455,7 @@ async function verifyHash(client2, parameters) {
       }),
       ...rest
     };
-    const { data: data2 } = await getAction$1(client2, call$1, "call")(args);
+    const { data: data2 } = await getAction$1(client2, call, "call")(args);
     return hexToBool(data2 ?? "0x0");
   } catch (error2) {
     try {
@@ -16119,7 +16119,7 @@ async function verifySiweMessage(client2, parameters) {
 }
 function publicActions(client2) {
   return {
-    call: (args) => call$1(client2, args),
+    call: (args) => call(client2, args),
     createAccessList: (args) => createAccessList(client2, args),
     createBlockFilter: () => createBlockFilter(client2),
     createContractEventFilter: (args) => createContractEventFilter(client2, args),
@@ -18691,7 +18691,7 @@ var Subscribable = class {
 };
 var define_process_env_default$a = {};
 var isServer = typeof window === "undefined" || "Deno" in globalThis;
-function noop$9() {
+function noop$7() {
 }
 function functionalUpdate(updater, input) {
   return typeof updater === "function" ? updater(input) : updater;
@@ -19344,7 +19344,7 @@ var Query = (_d = class extends Removable {
     var _a2, _b2;
     const promise = (_a2 = __privateGet(this, _retryer)) == null ? void 0 : _a2.promise;
     (_b2 = __privateGet(this, _retryer)) == null ? void 0 : _b2.cancel(options2);
-    return promise ? promise.then(noop$9).catch(noop$9) : Promise.resolve();
+    return promise ? promise.then(noop$7).catch(noop$7) : Promise.resolve();
   }
   destroy() {
     super.destroy();
@@ -20098,7 +20098,7 @@ var MutationCache = (_g = class extends Subscribable {
     const pausedMutations = this.getAll().filter((x3) => x3.state.isPaused);
     return notifyManager.batch(
       () => Promise.all(
-        pausedMutations.map((mutation) => mutation.continue().catch(noop$9))
+        pausedMutations.map((mutation) => mutation.continue().catch(noop$7))
       )
     );
   }
@@ -20351,7 +20351,7 @@ var QueryClient = (_h = class {
     const promises2 = notifyManager.batch(
       () => __privateGet(this, _queryCache).findAll(filters).map((query2) => query2.cancel(defaultedCancelOptions))
     );
-    return Promise.all(promises2).then(noop$9).catch(noop$9);
+    return Promise.all(promises2).then(noop$7).catch(noop$7);
   }
   invalidateQueries(filters, options2 = {}) {
     return notifyManager.batch(() => {
@@ -20379,12 +20379,12 @@ var QueryClient = (_h = class {
       () => __privateGet(this, _queryCache).findAll(filters).filter((query2) => !query2.isDisabled()).map((query2) => {
         let promise = query2.fetch(void 0, fetchOptions);
         if (!fetchOptions.throwOnError) {
-          promise = promise.catch(noop$9);
+          promise = promise.catch(noop$7);
         }
         return query2.state.fetchStatus === "paused" ? Promise.resolve() : promise;
       })
     );
-    return Promise.all(promises2).then(noop$9);
+    return Promise.all(promises2).then(noop$7);
   }
   fetchQuery(options2) {
     const defaultedOptions = this.defaultQueryOptions(options2);
@@ -20397,14 +20397,14 @@ var QueryClient = (_h = class {
     ) ? query2.fetch(defaultedOptions) : Promise.resolve(query2.state.data);
   }
   prefetchQuery(options2) {
-    return this.fetchQuery(options2).then(noop$9).catch(noop$9);
+    return this.fetchQuery(options2).then(noop$7).catch(noop$7);
   }
   fetchInfiniteQuery(options2) {
     options2.behavior = infiniteQueryBehavior(options2.pages);
     return this.fetchQuery(options2);
   }
   prefetchInfiniteQuery(options2) {
-    return this.fetchInfiniteQuery(options2).then(noop$9).catch(noop$9);
+    return this.fetchInfiniteQuery(options2).then(noop$7).catch(noop$7);
   }
   ensureInfiniteQueryData(options2) {
     options2.behavior = infiniteQueryBehavior(options2.pages);
@@ -20860,7 +20860,7 @@ var QueryObserver = (_i2 = class extends Subscribable {
     fetchOptions
   );
   if (!(fetchOptions == null ? void 0 : fetchOptions.throwOnError)) {
-    promise = promise.catch(noop$9);
+    promise = promise.catch(noop$7);
   }
   return promise;
 }, updateStaleTimeout_fn = function() {
@@ -21307,7 +21307,7 @@ function shouldThrowError(throwError, params) {
   }
   return !!throwError;
 }
-function noop$8() {
+function noop$6() {
 }
 var ensurePreventErrorBoundaryRetry = (options2, errorResetBoundary) => {
   if (options2.suspense || options2.throwOnError || options2.experimental_prefetchInRender) {
@@ -21385,7 +21385,7 @@ function useBaseQuery(options2, Observer, queryClient) {
   React$1.useSyncExternalStore(
     React$1.useCallback(
       (onStoreChange) => {
-        const unsubscribe = shouldSubscribe ? observer.subscribe(notifyManager.batchCalls(onStoreChange)) : noop$8;
+        const unsubscribe = shouldSubscribe ? observer.subscribe(notifyManager.batchCalls(onStoreChange)) : noop$6;
         observer.updateResult();
         return unsubscribe;
       },
@@ -21422,7 +21422,7 @@ function useBaseQuery(options2, Observer, queryClient) {
       // subscribe to the "cache promise" so that we can finalize the currentThenable once data comes in
       (_e3 = client2.getQueryCache().get(defaultedOptions.queryHash)) == null ? void 0 : _e3.promise
     );
-    promise == null ? void 0 : promise.catch(noop$8).finally(() => {
+    promise == null ? void 0 : promise.catch(noop$6).finally(() => {
       observer.updateResult();
     });
   }
@@ -21452,7 +21452,7 @@ function useMutation(options2, queryClient) {
   );
   const mutate2 = React$1.useCallback(
     (variables, mutateOptions) => {
-      observer.mutate(variables, mutateOptions).catch(noop$8);
+      observer.mutate(variables, mutateOptions).catch(noop$6);
     },
     [observer]
   );
@@ -22518,13 +22518,13 @@ function __esDecorate(ctor, descriptorIn, decorators, contextIn, initializers, e
   var kind = contextIn.kind, key2 = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
   var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
   var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
-  var _3, done2 = false;
+  var _3, done = false;
   for (var i3 = decorators.length - 1; i3 >= 0; i3--) {
     var context2 = {};
     for (var p2 in contextIn) context2[p2] = p2 === "access" ? {} : contextIn[p2];
     for (var p2 in contextIn.access) context2.access[p2] = contextIn.access[p2];
     context2.addInitializer = function(f5) {
-      if (done2) throw new TypeError("Cannot add initializers after decoration has completed");
+      if (done) throw new TypeError("Cannot add initializers after decoration has completed");
       extraInitializers.push(accept(f5 || null));
     };
     var result = (0, decorators[i3])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key2], context2);
@@ -22540,7 +22540,7 @@ function __esDecorate(ctor, descriptorIn, decorators, contextIn, initializers, e
     }
   }
   if (target) Object.defineProperty(target, contextIn.name, descriptor);
-  done2 = true;
+  done = true;
 }
 function __runInitializers(thisArg, initializers, value2) {
   var useValue = arguments.length > 2;
@@ -33776,7 +33776,7 @@ function useConnectModal() {
     openConnectModal
   };
 }
-var noop$7 = () => {
+var noop$5 = () => {
 };
 function ConnectButtonRenderer({
   children
@@ -33842,9 +33842,9 @@ function ConnectButtonRenderer({
     chainModalOpen,
     connectModalOpen,
     mounted: isMounted(),
-    openAccountModal: openAccountModal ?? noop$7,
-    openChainModal: openChainModal ?? noop$7,
-    openConnectModal: openConnectModal ?? noop$7
+    openAccountModal: openAccountModal ?? noop$5,
+    openChainModal: openChainModal ?? noop$5,
+    openConnectModal: openConnectModal ?? noop$5
   }));
 }
 ConnectButtonRenderer.displayName = "ConnectButton.Custom";
@@ -35726,7 +35726,7 @@ function requireDist() {
         }
         return -1;
       }
-      Buffer22.prototype.includes = function includes2(val, byteOffset, encoding) {
+      Buffer22.prototype.includes = function includes(val, byteOffset, encoding) {
         return this.indexOf(val, byteOffset, encoding) !== -1;
       };
       Buffer22.prototype.indexOf = function indexOf3(val, byteOffset, encoding) {
@@ -49586,12 +49586,12 @@ let RunningEvent$1 = class RunningEvent2 {
     this._listeners.push({ listener, once: once3 });
   }
   removeListener(listener) {
-    let done2 = false;
+    let done = false;
     this._listeners = this._listeners.filter((item) => {
-      if (done2 || item.listener !== listener) {
+      if (done || item.listener !== listener) {
         return true;
       }
-      done2 = true;
+      done = true;
       return false;
     });
   }
@@ -52952,12 +52952,12 @@ function poll$1(func2, options2) {
   }
   return new Promise(function(resolve, reject) {
     let timer2 = null;
-    let done2 = false;
+    let done = false;
     const cancel = () => {
-      if (done2) {
+      if (done) {
         return false;
       }
-      done2 = true;
+      done = true;
       if (timer2) {
         clearTimeout(timer2);
       }
@@ -52982,7 +52982,7 @@ function poll$1(func2, options2) {
           options2.oncePoll.once("poll", check);
         } else if (options2.onceBlock) {
           options2.onceBlock.once("block", check);
-        } else if (!done2) {
+        } else if (!done) {
           attempt++;
           if (attempt > retryLimit) {
             if (cancel()) {
@@ -54518,12 +54518,12 @@ let BaseProvider$2 = class BaseProvider2 extends Provider {
       }
       return new Promise((resolve, reject) => {
         const cancelFuncs = [];
-        let done2 = false;
+        let done = false;
         const alreadyDone = function() {
-          if (done2) {
+          if (done) {
             return true;
           }
-          done2 = true;
+          done = true;
           cancelFuncs.forEach((func2) => {
             func2();
           });
@@ -54546,12 +54546,12 @@ let BaseProvider$2 = class BaseProvider2 extends Provider {
           let lastBlockNumber = replaceable.startBlock;
           let scannedBlock = null;
           const replaceHandler = (blockNumber) => __awaiter$z(this, void 0, void 0, function* () {
-            if (done2) {
+            if (done) {
               return;
             }
             yield stall$3(1e3);
             this.getTransactionCount(replaceable.from).then((nonce) => __awaiter$z(this, void 0, void 0, function* () {
-              if (done2) {
+              if (done) {
                 return;
               }
               if (nonce <= replaceable.nonce) {
@@ -54570,7 +54570,7 @@ let BaseProvider$2 = class BaseProvider2 extends Provider {
                   }
                 }
                 while (scannedBlock <= blockNumber) {
-                  if (done2) {
+                  if (done) {
                     return;
                   }
                   const block = yield this.getBlockWithTransactions(scannedBlock);
@@ -54580,7 +54580,7 @@ let BaseProvider$2 = class BaseProvider2 extends Provider {
                       return;
                     }
                     if (tx.from === replaceable.from && tx.nonce === replaceable.nonce) {
-                      if (done2) {
+                      if (done) {
                         return;
                       }
                       const receipt2 = yield this.waitForTransaction(tx.hash, confirmations);
@@ -54606,18 +54606,18 @@ let BaseProvider$2 = class BaseProvider2 extends Provider {
                   scannedBlock++;
                 }
               }
-              if (done2) {
+              if (done) {
                 return;
               }
               this.once("block", replaceHandler);
             }), (error2) => {
-              if (done2) {
+              if (done) {
                 return;
               }
               this.once("block", replaceHandler);
             });
           });
-          if (done2) {
+          if (done) {
             return;
           }
           this.once("block", replaceHandler);
@@ -66795,71 +66795,76 @@ var cryptoBrowserify = {};
 var browser$g = { exports: {} };
 var safeBuffer$1 = { exports: {} };
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-(function(module2, exports2) {
-  var buffer2 = requireDist();
-  var Buffer2 = buffer2.Buffer;
-  function copyProps(src7, dst) {
-    for (var key2 in src7) {
-      dst[key2] = src7[key2];
-    }
-  }
-  if (Buffer2.from && Buffer2.alloc && Buffer2.allocUnsafe && Buffer2.allocUnsafeSlow) {
-    module2.exports = buffer2;
-  } else {
-    copyProps(buffer2, exports2);
-    exports2.Buffer = SafeBuffer;
-  }
-  function SafeBuffer(arg, encodingOrOffset, length) {
-    return Buffer2(arg, encodingOrOffset, length);
-  }
-  SafeBuffer.prototype = Object.create(Buffer2.prototype);
-  copyProps(Buffer2, SafeBuffer);
-  SafeBuffer.from = function(arg, encodingOrOffset, length) {
-    if (typeof arg === "number") {
-      throw new TypeError("Argument must not be a number");
-    }
-    return Buffer2(arg, encodingOrOffset, length);
-  };
-  SafeBuffer.alloc = function(size2, fill, encoding) {
-    if (typeof size2 !== "number") {
-      throw new TypeError("Argument must be a number");
-    }
-    var buf = Buffer2(size2);
-    if (fill !== void 0) {
-      if (typeof encoding === "string") {
-        buf.fill(fill, encoding);
-      } else {
-        buf.fill(fill);
+var hasRequiredSafeBuffer$1;
+function requireSafeBuffer$1() {
+  if (hasRequiredSafeBuffer$1) return safeBuffer$1.exports;
+  hasRequiredSafeBuffer$1 = 1;
+  (function(module2, exports2) {
+    var buffer2 = requireDist();
+    var Buffer2 = buffer2.Buffer;
+    function copyProps(src7, dst) {
+      for (var key2 in src7) {
+        dst[key2] = src7[key2];
       }
+    }
+    if (Buffer2.from && Buffer2.alloc && Buffer2.allocUnsafe && Buffer2.allocUnsafeSlow) {
+      module2.exports = buffer2;
     } else {
-      buf.fill(0);
+      copyProps(buffer2, exports2);
+      exports2.Buffer = SafeBuffer;
     }
-    return buf;
-  };
-  SafeBuffer.allocUnsafe = function(size2) {
-    if (typeof size2 !== "number") {
-      throw new TypeError("Argument must be a number");
+    function SafeBuffer(arg, encodingOrOffset, length) {
+      return Buffer2(arg, encodingOrOffset, length);
     }
-    return Buffer2(size2);
-  };
-  SafeBuffer.allocUnsafeSlow = function(size2) {
-    if (typeof size2 !== "number") {
-      throw new TypeError("Argument must be a number");
-    }
-    return buffer2.SlowBuffer(size2);
-  };
-})(safeBuffer$1, safeBuffer$1.exports);
-var safeBufferExports = safeBuffer$1.exports;
-var hasRequiredBrowser$b;
-function requireBrowser$b() {
-  if (hasRequiredBrowser$b) return browser$g.exports;
-  hasRequiredBrowser$b = 1;
+    SafeBuffer.prototype = Object.create(Buffer2.prototype);
+    copyProps(Buffer2, SafeBuffer);
+    SafeBuffer.from = function(arg, encodingOrOffset, length) {
+      if (typeof arg === "number") {
+        throw new TypeError("Argument must not be a number");
+      }
+      return Buffer2(arg, encodingOrOffset, length);
+    };
+    SafeBuffer.alloc = function(size2, fill, encoding) {
+      if (typeof size2 !== "number") {
+        throw new TypeError("Argument must be a number");
+      }
+      var buf = Buffer2(size2);
+      if (fill !== void 0) {
+        if (typeof encoding === "string") {
+          buf.fill(fill, encoding);
+        } else {
+          buf.fill(fill);
+        }
+      } else {
+        buf.fill(0);
+      }
+      return buf;
+    };
+    SafeBuffer.allocUnsafe = function(size2) {
+      if (typeof size2 !== "number") {
+        throw new TypeError("Argument must be a number");
+      }
+      return Buffer2(size2);
+    };
+    SafeBuffer.allocUnsafeSlow = function(size2) {
+      if (typeof size2 !== "number") {
+        throw new TypeError("Argument must be a number");
+      }
+      return buffer2.SlowBuffer(size2);
+    };
+  })(safeBuffer$1, safeBuffer$1.exports);
+  return safeBuffer$1.exports;
+}
+var hasRequiredBrowser$c;
+function requireBrowser$c() {
+  if (hasRequiredBrowser$c) return browser$g.exports;
+  hasRequiredBrowser$c = 1;
   var MAX_BYTES = 65536;
   var MAX_UINT32 = 4294967295;
   function oldBrowser() {
     throw new Error("Secure random number generation is not supported by this browser.\nUse Chrome, Firefox or Internet Explorer 11");
   }
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var crypto2 = globalThis.crypto || globalThis.msCrypto;
   if (crypto2 && crypto2.getRandomValues) {
     browser$g.exports = randomBytes2;
@@ -66915,7 +66920,7 @@ function EventEmitter$1() {
   EventEmitter$1.init.call(this);
 }
 events.exports = EventEmitter$1;
-events.exports.once = once$4;
+events.exports.once = once$2;
 EventEmitter$1.EventEmitter = EventEmitter$1;
 EventEmitter$1.prototype._events = void 0;
 EventEmitter$1.prototype._eventsCount = 0;
@@ -67209,7 +67214,7 @@ function unwrapListeners(arr2) {
   }
   return ret;
 }
-function once$4(emitter, name2) {
+function once$2(emitter, name2) {
   return new Promise(function(resolve, reject) {
     function errorListener(err) {
       emitter.removeListener(name2, resolver);
@@ -67252,7 +67257,14 @@ function eventTargetAgnosticAddListener(emitter, name2, listener, flags) {
 }
 var eventsExports = events.exports;
 const Nt$3 = /* @__PURE__ */ getDefaultExportFromCjs$1(eventsExports);
-var streamBrowser$1 = eventsExports.EventEmitter;
+var streamBrowser$1;
+var hasRequiredStreamBrowser$1;
+function requireStreamBrowser$1() {
+  if (hasRequiredStreamBrowser$1) return streamBrowser$1;
+  hasRequiredStreamBrowser$1 = 1;
+  streamBrowser$1 = eventsExports.EventEmitter;
+  return streamBrowser$1;
+}
 var util$9 = {};
 var types$3 = {};
 var shams$1 = function hasSymbols2() {
@@ -69454,239 +69466,266 @@ function requireBuffer_list() {
   }();
   return buffer_list$1;
 }
-function destroy$1(err, cb) {
-  var _this = this;
-  var readableDestroyed = this._readableState && this._readableState.destroyed;
-  var writableDestroyed = this._writableState && this._writableState.destroyed;
-  if (readableDestroyed || writableDestroyed) {
-    if (cb) {
-      cb(err);
-    } else if (err) {
-      if (!this._writableState) {
-        process$1$1.nextTick(emitErrorNT$1, this, err);
-      } else if (!this._writableState.errorEmitted) {
-        this._writableState.errorEmitted = true;
-        process$1$1.nextTick(emitErrorNT$1, this, err);
+var destroy_1$2;
+var hasRequiredDestroy$1;
+function requireDestroy$1() {
+  if (hasRequiredDestroy$1) return destroy_1$2;
+  hasRequiredDestroy$1 = 1;
+  function destroy2(err, cb) {
+    var _this = this;
+    var readableDestroyed = this._readableState && this._readableState.destroyed;
+    var writableDestroyed = this._writableState && this._writableState.destroyed;
+    if (readableDestroyed || writableDestroyed) {
+      if (cb) {
+        cb(err);
+      } else if (err) {
+        if (!this._writableState) {
+          process$1$1.nextTick(emitErrorNT2, this, err);
+        } else if (!this._writableState.errorEmitted) {
+          this._writableState.errorEmitted = true;
+          process$1$1.nextTick(emitErrorNT2, this, err);
+        }
       }
+      return this;
     }
+    if (this._readableState) {
+      this._readableState.destroyed = true;
+    }
+    if (this._writableState) {
+      this._writableState.destroyed = true;
+    }
+    this._destroy(err || null, function(err2) {
+      if (!cb && err2) {
+        if (!_this._writableState) {
+          process$1$1.nextTick(emitErrorAndCloseNT, _this, err2);
+        } else if (!_this._writableState.errorEmitted) {
+          _this._writableState.errorEmitted = true;
+          process$1$1.nextTick(emitErrorAndCloseNT, _this, err2);
+        } else {
+          process$1$1.nextTick(emitCloseNT2, _this);
+        }
+      } else if (cb) {
+        process$1$1.nextTick(emitCloseNT2, _this);
+        cb(err2);
+      } else {
+        process$1$1.nextTick(emitCloseNT2, _this);
+      }
+    });
     return this;
   }
-  if (this._readableState) {
-    this._readableState.destroyed = true;
+  function emitErrorAndCloseNT(self2, err) {
+    emitErrorNT2(self2, err);
+    emitCloseNT2(self2);
   }
-  if (this._writableState) {
-    this._writableState.destroyed = true;
+  function emitCloseNT2(self2) {
+    if (self2._writableState && !self2._writableState.emitClose) return;
+    if (self2._readableState && !self2._readableState.emitClose) return;
+    self2.emit("close");
   }
-  this._destroy(err || null, function(err2) {
-    if (!cb && err2) {
-      if (!_this._writableState) {
-        process$1$1.nextTick(emitErrorAndCloseNT, _this, err2);
-      } else if (!_this._writableState.errorEmitted) {
-        _this._writableState.errorEmitted = true;
-        process$1$1.nextTick(emitErrorAndCloseNT, _this, err2);
-      } else {
-        process$1$1.nextTick(emitCloseNT$1, _this);
-      }
-    } else if (cb) {
-      process$1$1.nextTick(emitCloseNT$1, _this);
-      cb(err2);
-    } else {
-      process$1$1.nextTick(emitCloseNT$1, _this);
+  function undestroy2() {
+    if (this._readableState) {
+      this._readableState.destroyed = false;
+      this._readableState.reading = false;
+      this._readableState.ended = false;
+      this._readableState.endEmitted = false;
     }
-  });
-  return this;
-}
-function emitErrorAndCloseNT(self2, err) {
-  emitErrorNT$1(self2, err);
-  emitCloseNT$1(self2);
-}
-function emitCloseNT$1(self2) {
-  if (self2._writableState && !self2._writableState.emitClose) return;
-  if (self2._readableState && !self2._readableState.emitClose) return;
-  self2.emit("close");
-}
-function undestroy$1() {
-  if (this._readableState) {
-    this._readableState.destroyed = false;
-    this._readableState.reading = false;
-    this._readableState.ended = false;
-    this._readableState.endEmitted = false;
+    if (this._writableState) {
+      this._writableState.destroyed = false;
+      this._writableState.ended = false;
+      this._writableState.ending = false;
+      this._writableState.finalCalled = false;
+      this._writableState.prefinished = false;
+      this._writableState.finished = false;
+      this._writableState.errorEmitted = false;
+    }
   }
-  if (this._writableState) {
-    this._writableState.destroyed = false;
-    this._writableState.ended = false;
-    this._writableState.ending = false;
-    this._writableState.finalCalled = false;
-    this._writableState.prefinished = false;
-    this._writableState.finished = false;
-    this._writableState.errorEmitted = false;
+  function emitErrorNT2(self2, err) {
+    self2.emit("error", err);
   }
+  function errorOrDestroy2(stream2, err) {
+    var rState = stream2._readableState;
+    var wState = stream2._writableState;
+    if (rState && rState.autoDestroy || wState && wState.autoDestroy) stream2.destroy(err);
+    else stream2.emit("error", err);
+  }
+  destroy_1$2 = {
+    destroy: destroy2,
+    undestroy: undestroy2,
+    errorOrDestroy: errorOrDestroy2
+  };
+  return destroy_1$2;
 }
-function emitErrorNT$1(self2, err) {
-  self2.emit("error", err);
-}
-function errorOrDestroy$1(stream2, err) {
-  var rState = stream2._readableState;
-  var wState = stream2._writableState;
-  if (rState && rState.autoDestroy || wState && wState.autoDestroy) stream2.destroy(err);
-  else stream2.emit("error", err);
-}
-var destroy_1$2 = {
-  destroy: destroy$1,
-  undestroy: undestroy$1,
-  errorOrDestroy: errorOrDestroy$1
-};
 var errorsBrowser = {};
-function _inheritsLoose(subClass, superClass) {
-  subClass.prototype = Object.create(superClass.prototype);
-  subClass.prototype.constructor = subClass;
-  subClass.__proto__ = superClass;
-}
-var codes$2 = {};
-function createErrorType(code, message, Base2) {
-  if (!Base2) {
-    Base2 = Error;
+var hasRequiredErrorsBrowser;
+function requireErrorsBrowser() {
+  if (hasRequiredErrorsBrowser) return errorsBrowser;
+  hasRequiredErrorsBrowser = 1;
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+    subClass.__proto__ = superClass;
   }
-  function getMessage2(arg1, arg2, arg3) {
-    if (typeof message === "string") {
-      return message;
-    } else {
-      return message(arg1, arg2, arg3);
+  var codes2 = {};
+  function createErrorType(code, message, Base2) {
+    if (!Base2) {
+      Base2 = Error;
     }
-  }
-  var NodeError = /* @__PURE__ */ function(_Base) {
-    _inheritsLoose(NodeError2, _Base);
-    function NodeError2(arg1, arg2, arg3) {
-      return _Base.call(this, getMessage2(arg1, arg2, arg3)) || this;
-    }
-    return NodeError2;
-  }(Base2);
-  NodeError.prototype.name = Base2.name;
-  NodeError.prototype.code = code;
-  codes$2[code] = NodeError;
-}
-function oneOf(expected, thing) {
-  if (Array.isArray(expected)) {
-    var len = expected.length;
-    expected = expected.map(function(i3) {
-      return String(i3);
-    });
-    if (len > 2) {
-      return "one of ".concat(thing, " ").concat(expected.slice(0, len - 1).join(", "), ", or ") + expected[len - 1];
-    } else if (len === 2) {
-      return "one of ".concat(thing, " ").concat(expected[0], " or ").concat(expected[1]);
-    } else {
-      return "of ".concat(thing, " ").concat(expected[0]);
-    }
-  } else {
-    return "of ".concat(thing, " ").concat(String(expected));
-  }
-}
-function startsWith(str, search, pos) {
-  return str.substr(0, search.length) === search;
-}
-function endsWith(str, search, this_len) {
-  if (this_len === void 0 || this_len > str.length) {
-    this_len = str.length;
-  }
-  return str.substring(this_len - search.length, this_len) === search;
-}
-function includes(str, search, start) {
-  if (typeof start !== "number") {
-    start = 0;
-  }
-  if (start + search.length > str.length) {
-    return false;
-  } else {
-    return str.indexOf(search, start) !== -1;
-  }
-}
-createErrorType("ERR_INVALID_OPT_VALUE", function(name2, value2) {
-  return 'The value "' + value2 + '" is invalid for option "' + name2 + '"';
-}, TypeError);
-createErrorType("ERR_INVALID_ARG_TYPE", function(name2, expected, actual) {
-  var determiner;
-  if (typeof expected === "string" && startsWith(expected, "not ")) {
-    determiner = "must not be";
-    expected = expected.replace(/^not /, "");
-  } else {
-    determiner = "must be";
-  }
-  var msg;
-  if (endsWith(name2, " argument")) {
-    msg = "The ".concat(name2, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
-  } else {
-    var type2 = includes(name2, ".") ? "property" : "argument";
-    msg = 'The "'.concat(name2, '" ').concat(type2, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
-  }
-  msg += ". Received type ".concat(typeof actual);
-  return msg;
-}, TypeError);
-createErrorType("ERR_STREAM_PUSH_AFTER_EOF", "stream.push() after EOF");
-createErrorType("ERR_METHOD_NOT_IMPLEMENTED", function(name2) {
-  return "The " + name2 + " method is not implemented";
-});
-createErrorType("ERR_STREAM_PREMATURE_CLOSE", "Premature close");
-createErrorType("ERR_STREAM_DESTROYED", function(name2) {
-  return "Cannot call " + name2 + " after a stream was destroyed";
-});
-createErrorType("ERR_MULTIPLE_CALLBACK", "Callback called multiple times");
-createErrorType("ERR_STREAM_CANNOT_PIPE", "Cannot pipe, not readable");
-createErrorType("ERR_STREAM_WRITE_AFTER_END", "write after end");
-createErrorType("ERR_STREAM_NULL_VALUES", "May not write null values to stream", TypeError);
-createErrorType("ERR_UNKNOWN_ENCODING", function(arg) {
-  return "Unknown encoding: " + arg;
-}, TypeError);
-createErrorType("ERR_STREAM_UNSHIFT_AFTER_END_EVENT", "stream.unshift() after end event");
-errorsBrowser.codes = codes$2;
-var ERR_INVALID_OPT_VALUE = errorsBrowser.codes.ERR_INVALID_OPT_VALUE;
-function highWaterMarkFrom$1(options2, isDuplex, duplexKey) {
-  return options2.highWaterMark != null ? options2.highWaterMark : isDuplex ? options2[duplexKey] : null;
-}
-function getHighWaterMark$2(state2, options2, duplexKey, isDuplex) {
-  var hwm = highWaterMarkFrom$1(options2, isDuplex, duplexKey);
-  if (hwm != null) {
-    if (!(isFinite(hwm) && Math.floor(hwm) === hwm) || hwm < 0) {
-      var name2 = isDuplex ? duplexKey : "highWaterMark";
-      throw new ERR_INVALID_OPT_VALUE(name2, hwm);
-    }
-    return Math.floor(hwm);
-  }
-  return state2.objectMode ? 16 : 16 * 1024;
-}
-var state$9 = {
-  getHighWaterMark: getHighWaterMark$2
-};
-var browser$f = deprecate$1;
-function deprecate$1(fn2, msg) {
-  if (config$1("noDeprecation")) {
-    return fn2;
-  }
-  var warned = false;
-  function deprecated2() {
-    if (!warned) {
-      if (config$1("throwDeprecation")) {
-        throw new Error(msg);
-      } else if (config$1("traceDeprecation")) {
-        console.trace(msg);
+    function getMessage2(arg1, arg2, arg3) {
+      if (typeof message === "string") {
+        return message;
       } else {
-        console.warn(msg);
+        return message(arg1, arg2, arg3);
       }
-      warned = true;
     }
-    return fn2.apply(this, arguments);
+    var NodeError = /* @__PURE__ */ function(_Base) {
+      _inheritsLoose(NodeError2, _Base);
+      function NodeError2(arg1, arg2, arg3) {
+        return _Base.call(this, getMessage2(arg1, arg2, arg3)) || this;
+      }
+      return NodeError2;
+    }(Base2);
+    NodeError.prototype.name = Base2.name;
+    NodeError.prototype.code = code;
+    codes2[code] = NodeError;
   }
-  return deprecated2;
+  function oneOf(expected, thing) {
+    if (Array.isArray(expected)) {
+      var len = expected.length;
+      expected = expected.map(function(i3) {
+        return String(i3);
+      });
+      if (len > 2) {
+        return "one of ".concat(thing, " ").concat(expected.slice(0, len - 1).join(", "), ", or ") + expected[len - 1];
+      } else if (len === 2) {
+        return "one of ".concat(thing, " ").concat(expected[0], " or ").concat(expected[1]);
+      } else {
+        return "of ".concat(thing, " ").concat(expected[0]);
+      }
+    } else {
+      return "of ".concat(thing, " ").concat(String(expected));
+    }
+  }
+  function startsWith(str, search, pos) {
+    return str.substr(0, search.length) === search;
+  }
+  function endsWith(str, search, this_len) {
+    if (this_len === void 0 || this_len > str.length) {
+      this_len = str.length;
+    }
+    return str.substring(this_len - search.length, this_len) === search;
+  }
+  function includes(str, search, start) {
+    if (typeof start !== "number") {
+      start = 0;
+    }
+    if (start + search.length > str.length) {
+      return false;
+    } else {
+      return str.indexOf(search, start) !== -1;
+    }
+  }
+  createErrorType("ERR_INVALID_OPT_VALUE", function(name2, value2) {
+    return 'The value "' + value2 + '" is invalid for option "' + name2 + '"';
+  }, TypeError);
+  createErrorType("ERR_INVALID_ARG_TYPE", function(name2, expected, actual) {
+    var determiner;
+    if (typeof expected === "string" && startsWith(expected, "not ")) {
+      determiner = "must not be";
+      expected = expected.replace(/^not /, "");
+    } else {
+      determiner = "must be";
+    }
+    var msg;
+    if (endsWith(name2, " argument")) {
+      msg = "The ".concat(name2, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
+    } else {
+      var type2 = includes(name2, ".") ? "property" : "argument";
+      msg = 'The "'.concat(name2, '" ').concat(type2, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
+    }
+    msg += ". Received type ".concat(typeof actual);
+    return msg;
+  }, TypeError);
+  createErrorType("ERR_STREAM_PUSH_AFTER_EOF", "stream.push() after EOF");
+  createErrorType("ERR_METHOD_NOT_IMPLEMENTED", function(name2) {
+    return "The " + name2 + " method is not implemented";
+  });
+  createErrorType("ERR_STREAM_PREMATURE_CLOSE", "Premature close");
+  createErrorType("ERR_STREAM_DESTROYED", function(name2) {
+    return "Cannot call " + name2 + " after a stream was destroyed";
+  });
+  createErrorType("ERR_MULTIPLE_CALLBACK", "Callback called multiple times");
+  createErrorType("ERR_STREAM_CANNOT_PIPE", "Cannot pipe, not readable");
+  createErrorType("ERR_STREAM_WRITE_AFTER_END", "write after end");
+  createErrorType("ERR_STREAM_NULL_VALUES", "May not write null values to stream", TypeError);
+  createErrorType("ERR_UNKNOWN_ENCODING", function(arg) {
+    return "Unknown encoding: " + arg;
+  }, TypeError);
+  createErrorType("ERR_STREAM_UNSHIFT_AFTER_END_EVENT", "stream.unshift() after end event");
+  errorsBrowser.codes = codes2;
+  return errorsBrowser;
 }
-function config$1(name2) {
-  try {
-    if (!globalThis.localStorage) return false;
-  } catch (_3) {
-    return false;
+var state$9;
+var hasRequiredState;
+function requireState() {
+  if (hasRequiredState) return state$9;
+  hasRequiredState = 1;
+  var ERR_INVALID_OPT_VALUE = requireErrorsBrowser().codes.ERR_INVALID_OPT_VALUE;
+  function highWaterMarkFrom2(options2, isDuplex, duplexKey) {
+    return options2.highWaterMark != null ? options2.highWaterMark : isDuplex ? options2[duplexKey] : null;
   }
-  var val = globalThis.localStorage[name2];
-  if (null == val) return false;
-  return String(val).toLowerCase() === "true";
+  function getHighWaterMark2(state2, options2, duplexKey, isDuplex) {
+    var hwm = highWaterMarkFrom2(options2, isDuplex, duplexKey);
+    if (hwm != null) {
+      if (!(isFinite(hwm) && Math.floor(hwm) === hwm) || hwm < 0) {
+        var name2 = isDuplex ? duplexKey : "highWaterMark";
+        throw new ERR_INVALID_OPT_VALUE(name2, hwm);
+      }
+      return Math.floor(hwm);
+    }
+    return state2.objectMode ? 16 : 16 * 1024;
+  }
+  state$9 = {
+    getHighWaterMark: getHighWaterMark2
+  };
+  return state$9;
+}
+var browser$f;
+var hasRequiredBrowser$b;
+function requireBrowser$b() {
+  if (hasRequiredBrowser$b) return browser$f;
+  hasRequiredBrowser$b = 1;
+  browser$f = deprecate2;
+  function deprecate2(fn2, msg) {
+    if (config2("noDeprecation")) {
+      return fn2;
+    }
+    var warned = false;
+    function deprecated2() {
+      if (!warned) {
+        if (config2("throwDeprecation")) {
+          throw new Error(msg);
+        } else if (config2("traceDeprecation")) {
+          console.trace(msg);
+        } else {
+          console.warn(msg);
+        }
+        warned = true;
+      }
+      return fn2.apply(this, arguments);
+    }
+    return deprecated2;
+  }
+  function config2(name2) {
+    try {
+      if (!globalThis.localStorage) return false;
+    } catch (_3) {
+      return false;
+    }
+    var val = globalThis.localStorage[name2];
+    if (null == val) return false;
+    return String(val).toLowerCase() === "true";
+  }
+  return browser$f;
 }
 var _stream_writable$1;
 var hasRequired_stream_writable$1;
@@ -69705,9 +69744,9 @@ function require_stream_writable$1() {
   var Duplex2;
   Writable.WritableState = WritableState;
   var internalUtil = {
-    deprecate: browser$f
+    deprecate: requireBrowser$b()
   };
-  var Stream2 = streamBrowser$1;
+  var Stream2 = requireStreamBrowser$1();
   var Buffer2 = requireDist().Buffer;
   var OurUint8Array = (typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
   };
@@ -69717,9 +69756,9 @@ function require_stream_writable$1() {
   function _isUint8Array(obj) {
     return Buffer2.isBuffer(obj) || obj instanceof OurUint8Array;
   }
-  var destroyImpl2 = destroy_1$2;
-  var _require = state$9, getHighWaterMark2 = _require.getHighWaterMark;
-  var _require$codes2 = errorsBrowser.codes, ERR_INVALID_ARG_TYPE2 = _require$codes2.ERR_INVALID_ARG_TYPE, ERR_METHOD_NOT_IMPLEMENTED2 = _require$codes2.ERR_METHOD_NOT_IMPLEMENTED, ERR_MULTIPLE_CALLBACK2 = _require$codes2.ERR_MULTIPLE_CALLBACK, ERR_STREAM_CANNOT_PIPE = _require$codes2.ERR_STREAM_CANNOT_PIPE, ERR_STREAM_DESTROYED2 = _require$codes2.ERR_STREAM_DESTROYED, ERR_STREAM_NULL_VALUES2 = _require$codes2.ERR_STREAM_NULL_VALUES, ERR_STREAM_WRITE_AFTER_END = _require$codes2.ERR_STREAM_WRITE_AFTER_END, ERR_UNKNOWN_ENCODING = _require$codes2.ERR_UNKNOWN_ENCODING;
+  var destroyImpl2 = requireDestroy$1();
+  var _require = requireState(), getHighWaterMark2 = _require.getHighWaterMark;
+  var _require$codes = requireErrorsBrowser().codes, ERR_INVALID_ARG_TYPE2 = _require$codes.ERR_INVALID_ARG_TYPE, ERR_METHOD_NOT_IMPLEMENTED2 = _require$codes.ERR_METHOD_NOT_IMPLEMENTED, ERR_MULTIPLE_CALLBACK2 = _require$codes.ERR_MULTIPLE_CALLBACK, ERR_STREAM_CANNOT_PIPE = _require$codes.ERR_STREAM_CANNOT_PIPE, ERR_STREAM_DESTROYED2 = _require$codes.ERR_STREAM_DESTROYED, ERR_STREAM_NULL_VALUES2 = _require$codes.ERR_STREAM_NULL_VALUES, ERR_STREAM_WRITE_AFTER_END = _require$codes.ERR_STREAM_WRITE_AFTER_END, ERR_UNKNOWN_ENCODING = _require$codes.ERR_UNKNOWN_ENCODING;
   var errorOrDestroy2 = destroyImpl2.errorOrDestroy;
   inherits_browserExports(Writable, Stream2);
   function nop2() {
@@ -70241,7 +70280,7 @@ function require_stream_duplex$1() {
   return _stream_duplex$1;
 }
 var string_decoder = {};
-var Buffer$9 = safeBufferExports.Buffer;
+var Buffer$9 = requireSafeBuffer$1().Buffer;
 var isEncoding = Buffer$9.isEncoding || function(encoding) {
   encoding = "" + encoding;
   switch (encoding && encoding.toLowerCase()) {
@@ -70472,88 +70511,95 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : "";
 }
-var ERR_STREAM_PREMATURE_CLOSE$2 = errorsBrowser.codes.ERR_STREAM_PREMATURE_CLOSE;
-function once$3(callback) {
-  var called = false;
-  return function() {
-    if (called) return;
-    called = true;
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    callback.apply(this, args);
-  };
-}
-function noop$6() {
-}
-function isRequest$3(stream2) {
-  return stream2.setHeader && typeof stream2.abort === "function";
-}
-function eos$4(stream2, opts, callback) {
-  if (typeof opts === "function") return eos$4(stream2, null, opts);
-  if (!opts) opts = {};
-  callback = once$3(callback || noop$6);
-  var readable2 = opts.readable || opts.readable !== false && stream2.readable;
-  var writable2 = opts.writable || opts.writable !== false && stream2.writable;
-  var onlegacyfinish = function onlegacyfinish2() {
-    if (!stream2.writable) onfinish();
-  };
-  var writableEnded = stream2._writableState && stream2._writableState.finished;
-  var onfinish = function onfinish2() {
-    writable2 = false;
-    writableEnded = true;
-    if (!readable2) callback.call(stream2);
-  };
-  var readableEnded = stream2._readableState && stream2._readableState.endEmitted;
-  var onend = function onend2() {
-    readable2 = false;
-    readableEnded = true;
-    if (!writable2) callback.call(stream2);
-  };
-  var onerror = function onerror2(err) {
-    callback.call(stream2, err);
-  };
-  var onclose = function onclose2() {
-    var err;
-    if (readable2 && !readableEnded) {
-      if (!stream2._readableState || !stream2._readableState.ended) err = new ERR_STREAM_PREMATURE_CLOSE$2();
-      return callback.call(stream2, err);
-    }
-    if (writable2 && !writableEnded) {
-      if (!stream2._writableState || !stream2._writableState.ended) err = new ERR_STREAM_PREMATURE_CLOSE$2();
-      return callback.call(stream2, err);
-    }
-  };
-  var onrequest = function onrequest2() {
-    stream2.req.on("finish", onfinish);
-  };
-  if (isRequest$3(stream2)) {
-    stream2.on("complete", onfinish);
-    stream2.on("abort", onclose);
-    if (stream2.req) onrequest();
-    else stream2.on("request", onrequest);
-  } else if (writable2 && !stream2._writableState) {
-    stream2.on("end", onlegacyfinish);
-    stream2.on("close", onlegacyfinish);
+var endOfStream$1;
+var hasRequiredEndOfStream;
+function requireEndOfStream() {
+  if (hasRequiredEndOfStream) return endOfStream$1;
+  hasRequiredEndOfStream = 1;
+  var ERR_STREAM_PREMATURE_CLOSE2 = requireErrorsBrowser().codes.ERR_STREAM_PREMATURE_CLOSE;
+  function once3(callback) {
+    var called = false;
+    return function() {
+      if (called) return;
+      called = true;
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+      callback.apply(this, args);
+    };
   }
-  stream2.on("end", onend);
-  stream2.on("finish", onfinish);
-  if (opts.error !== false) stream2.on("error", onerror);
-  stream2.on("close", onclose);
-  return function() {
-    stream2.removeListener("complete", onfinish);
-    stream2.removeListener("abort", onclose);
-    stream2.removeListener("request", onrequest);
-    if (stream2.req) stream2.req.removeListener("finish", onfinish);
-    stream2.removeListener("end", onlegacyfinish);
-    stream2.removeListener("close", onlegacyfinish);
-    stream2.removeListener("finish", onfinish);
-    stream2.removeListener("end", onend);
-    stream2.removeListener("error", onerror);
-    stream2.removeListener("close", onclose);
-  };
+  function noop2() {
+  }
+  function isRequest2(stream2) {
+    return stream2.setHeader && typeof stream2.abort === "function";
+  }
+  function eos2(stream2, opts, callback) {
+    if (typeof opts === "function") return eos2(stream2, null, opts);
+    if (!opts) opts = {};
+    callback = once3(callback || noop2);
+    var readable2 = opts.readable || opts.readable !== false && stream2.readable;
+    var writable2 = opts.writable || opts.writable !== false && stream2.writable;
+    var onlegacyfinish = function onlegacyfinish2() {
+      if (!stream2.writable) onfinish();
+    };
+    var writableEnded = stream2._writableState && stream2._writableState.finished;
+    var onfinish = function onfinish2() {
+      writable2 = false;
+      writableEnded = true;
+      if (!readable2) callback.call(stream2);
+    };
+    var readableEnded = stream2._readableState && stream2._readableState.endEmitted;
+    var onend = function onend2() {
+      readable2 = false;
+      readableEnded = true;
+      if (!writable2) callback.call(stream2);
+    };
+    var onerror = function onerror2(err) {
+      callback.call(stream2, err);
+    };
+    var onclose = function onclose2() {
+      var err;
+      if (readable2 && !readableEnded) {
+        if (!stream2._readableState || !stream2._readableState.ended) err = new ERR_STREAM_PREMATURE_CLOSE2();
+        return callback.call(stream2, err);
+      }
+      if (writable2 && !writableEnded) {
+        if (!stream2._writableState || !stream2._writableState.ended) err = new ERR_STREAM_PREMATURE_CLOSE2();
+        return callback.call(stream2, err);
+      }
+    };
+    var onrequest = function onrequest2() {
+      stream2.req.on("finish", onfinish);
+    };
+    if (isRequest2(stream2)) {
+      stream2.on("complete", onfinish);
+      stream2.on("abort", onclose);
+      if (stream2.req) onrequest();
+      else stream2.on("request", onrequest);
+    } else if (writable2 && !stream2._writableState) {
+      stream2.on("end", onlegacyfinish);
+      stream2.on("close", onlegacyfinish);
+    }
+    stream2.on("end", onend);
+    stream2.on("finish", onfinish);
+    if (opts.error !== false) stream2.on("error", onerror);
+    stream2.on("close", onclose);
+    return function() {
+      stream2.removeListener("complete", onfinish);
+      stream2.removeListener("abort", onclose);
+      stream2.removeListener("request", onrequest);
+      if (stream2.req) stream2.req.removeListener("finish", onfinish);
+      stream2.removeListener("end", onlegacyfinish);
+      stream2.removeListener("close", onlegacyfinish);
+      stream2.removeListener("finish", onfinish);
+      stream2.removeListener("end", onend);
+      stream2.removeListener("error", onerror);
+      stream2.removeListener("close", onclose);
+    };
+  }
+  endOfStream$1 = eos2;
+  return endOfStream$1;
 }
-var endOfStream$1 = eos$4;
 var async_iterator;
 var hasRequiredAsync_iterator;
 function requireAsync_iterator() {
@@ -70583,7 +70629,7 @@ function requireAsync_iterator() {
     }
     return (hint === "string" ? String : Number)(input);
   }
-  var finished2 = endOfStream$1;
+  var finished2 = requireEndOfStream();
   var kLastResolve = Symbol("lastResolve");
   var kLastReject = Symbol("lastReject");
   var kError = Symbol("error");
@@ -70591,10 +70637,10 @@ function requireAsync_iterator() {
   var kLastPromise = Symbol("lastPromise");
   var kHandlePromise = Symbol("handlePromise");
   var kStream = Symbol("stream");
-  function createIterResult(value2, done2) {
+  function createIterResult(value2, done) {
     return {
       value: value2,
-      done: done2
+      done
     };
   }
   function readAndResolve(iter) {
@@ -70759,7 +70805,7 @@ function require_stream_readable$1() {
   var EElistenerCount = function EElistenerCount2(emitter, type2) {
     return emitter.listeners(type2).length;
   };
-  var Stream2 = streamBrowser$1;
+  var Stream2 = requireStreamBrowser$1();
   var Buffer2 = requireDist().Buffer;
   var OurUint8Array = (typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
   };
@@ -70778,9 +70824,9 @@ function require_stream_readable$1() {
     };
   }
   var BufferList3 = requireBuffer_list();
-  var destroyImpl2 = destroy_1$2;
-  var _require = state$9, getHighWaterMark2 = _require.getHighWaterMark;
-  var _require$codes2 = errorsBrowser.codes, ERR_INVALID_ARG_TYPE2 = _require$codes2.ERR_INVALID_ARG_TYPE, ERR_STREAM_PUSH_AFTER_EOF = _require$codes2.ERR_STREAM_PUSH_AFTER_EOF, ERR_METHOD_NOT_IMPLEMENTED2 = _require$codes2.ERR_METHOD_NOT_IMPLEMENTED, ERR_STREAM_UNSHIFT_AFTER_END_EVENT = _require$codes2.ERR_STREAM_UNSHIFT_AFTER_END_EVENT;
+  var destroyImpl2 = requireDestroy$1();
+  var _require = requireState(), getHighWaterMark2 = _require.getHighWaterMark;
+  var _require$codes = requireErrorsBrowser().codes, ERR_INVALID_ARG_TYPE2 = _require$codes.ERR_INVALID_ARG_TYPE, ERR_STREAM_PUSH_AFTER_EOF = _require$codes.ERR_STREAM_PUSH_AFTER_EOF, ERR_METHOD_NOT_IMPLEMENTED2 = _require$codes.ERR_METHOD_NOT_IMPLEMENTED, ERR_STREAM_UNSHIFT_AFTER_END_EVENT = _require$codes.ERR_STREAM_UNSHIFT_AFTER_END_EVENT;
   var StringDecoder2;
   var createReadableStreamAsyncIterator;
   var from2;
@@ -71475,201 +71521,227 @@ function require_stream_readable$1() {
   }
   return _stream_readable$1;
 }
-var _stream_transform$1 = Transform$5;
-var _require$codes$1 = errorsBrowser.codes, ERR_METHOD_NOT_IMPLEMENTED$1 = _require$codes$1.ERR_METHOD_NOT_IMPLEMENTED, ERR_MULTIPLE_CALLBACK$1 = _require$codes$1.ERR_MULTIPLE_CALLBACK, ERR_TRANSFORM_ALREADY_TRANSFORMING = _require$codes$1.ERR_TRANSFORM_ALREADY_TRANSFORMING, ERR_TRANSFORM_WITH_LENGTH_0 = _require$codes$1.ERR_TRANSFORM_WITH_LENGTH_0;
-var Duplex$3 = require_stream_duplex$1();
-inherits_browserExports(Transform$5, Duplex$3);
-function afterTransform(er2, data2) {
-  var ts2 = this._transformState;
-  ts2.transforming = false;
-  var cb = ts2.writecb;
-  if (cb === null) {
-    return this.emit("error", new ERR_MULTIPLE_CALLBACK$1());
-  }
-  ts2.writechunk = null;
-  ts2.writecb = null;
-  if (data2 != null)
-    this.push(data2);
-  cb(er2);
-  var rs2 = this._readableState;
-  rs2.reading = false;
-  if (rs2.needReadable || rs2.length < rs2.highWaterMark) {
-    this._read(rs2.highWaterMark);
-  }
-}
-function Transform$5(options2) {
-  if (!(this instanceof Transform$5)) return new Transform$5(options2);
-  Duplex$3.call(this, options2);
-  this._transformState = {
-    afterTransform: afterTransform.bind(this),
-    needTransform: false,
-    transforming: false,
-    writecb: null,
-    writechunk: null,
-    writeencoding: null
-  };
-  this._readableState.needReadable = true;
-  this._readableState.sync = false;
-  if (options2) {
-    if (typeof options2.transform === "function") this._transform = options2.transform;
-    if (typeof options2.flush === "function") this._flush = options2.flush;
-  }
-  this.on("prefinish", prefinish$1);
-}
-function prefinish$1() {
-  var _this = this;
-  if (typeof this._flush === "function" && !this._readableState.destroyed) {
-    this._flush(function(er2, data2) {
-      done(_this, er2, data2);
-    });
-  } else {
-    done(this, null, null);
-  }
-}
-Transform$5.prototype.push = function(chunk, encoding) {
-  this._transformState.needTransform = false;
-  return Duplex$3.prototype.push.call(this, chunk, encoding);
-};
-Transform$5.prototype._transform = function(chunk, encoding, cb) {
-  cb(new ERR_METHOD_NOT_IMPLEMENTED$1("_transform()"));
-};
-Transform$5.prototype._write = function(chunk, encoding, cb) {
-  var ts2 = this._transformState;
-  ts2.writecb = cb;
-  ts2.writechunk = chunk;
-  ts2.writeencoding = encoding;
-  if (!ts2.transforming) {
+var _stream_transform$1;
+var hasRequired_stream_transform$1;
+function require_stream_transform$1() {
+  if (hasRequired_stream_transform$1) return _stream_transform$1;
+  hasRequired_stream_transform$1 = 1;
+  _stream_transform$1 = Transform2;
+  var _require$codes = requireErrorsBrowser().codes, ERR_METHOD_NOT_IMPLEMENTED2 = _require$codes.ERR_METHOD_NOT_IMPLEMENTED, ERR_MULTIPLE_CALLBACK2 = _require$codes.ERR_MULTIPLE_CALLBACK, ERR_TRANSFORM_ALREADY_TRANSFORMING = _require$codes.ERR_TRANSFORM_ALREADY_TRANSFORMING, ERR_TRANSFORM_WITH_LENGTH_0 = _require$codes.ERR_TRANSFORM_WITH_LENGTH_0;
+  var Duplex2 = require_stream_duplex$1();
+  inherits_browserExports(Transform2, Duplex2);
+  function afterTransform(er2, data2) {
+    var ts2 = this._transformState;
+    ts2.transforming = false;
+    var cb = ts2.writecb;
+    if (cb === null) {
+      return this.emit("error", new ERR_MULTIPLE_CALLBACK2());
+    }
+    ts2.writechunk = null;
+    ts2.writecb = null;
+    if (data2 != null)
+      this.push(data2);
+    cb(er2);
     var rs2 = this._readableState;
-    if (ts2.needTransform || rs2.needReadable || rs2.length < rs2.highWaterMark) this._read(rs2.highWaterMark);
+    rs2.reading = false;
+    if (rs2.needReadable || rs2.length < rs2.highWaterMark) {
+      this._read(rs2.highWaterMark);
+    }
   }
-};
-Transform$5.prototype._read = function(n4) {
-  var ts2 = this._transformState;
-  if (ts2.writechunk !== null && !ts2.transforming) {
-    ts2.transforming = true;
-    this._transform(ts2.writechunk, ts2.writeencoding, ts2.afterTransform);
-  } else {
-    ts2.needTransform = true;
+  function Transform2(options2) {
+    if (!(this instanceof Transform2)) return new Transform2(options2);
+    Duplex2.call(this, options2);
+    this._transformState = {
+      afterTransform: afterTransform.bind(this),
+      needTransform: false,
+      transforming: false,
+      writecb: null,
+      writechunk: null,
+      writeencoding: null
+    };
+    this._readableState.needReadable = true;
+    this._readableState.sync = false;
+    if (options2) {
+      if (typeof options2.transform === "function") this._transform = options2.transform;
+      if (typeof options2.flush === "function") this._flush = options2.flush;
+    }
+    this.on("prefinish", prefinish2);
   }
-};
-Transform$5.prototype._destroy = function(err, cb) {
-  Duplex$3.prototype._destroy.call(this, err, function(err2) {
-    cb(err2);
-  });
-};
-function done(stream2, er2, data2) {
-  if (er2) return stream2.emit("error", er2);
-  if (data2 != null)
-    stream2.push(data2);
-  if (stream2._writableState.length) throw new ERR_TRANSFORM_WITH_LENGTH_0();
-  if (stream2._transformState.transforming) throw new ERR_TRANSFORM_ALREADY_TRANSFORMING();
-  return stream2.push(null);
-}
-var _stream_passthrough$1 = PassThrough$2;
-var Transform$4 = _stream_transform$1;
-inherits_browserExports(PassThrough$2, Transform$4);
-function PassThrough$2(options2) {
-  if (!(this instanceof PassThrough$2)) return new PassThrough$2(options2);
-  Transform$4.call(this, options2);
-}
-PassThrough$2.prototype._transform = function(chunk, encoding, cb) {
-  cb(null, chunk);
-};
-var eos$3;
-function once$2(callback) {
-  var called = false;
-  return function() {
-    if (called) return;
-    called = true;
-    callback.apply(void 0, arguments);
+  function prefinish2() {
+    var _this = this;
+    if (typeof this._flush === "function" && !this._readableState.destroyed) {
+      this._flush(function(er2, data2) {
+        done(_this, er2, data2);
+      });
+    } else {
+      done(this, null, null);
+    }
+  }
+  Transform2.prototype.push = function(chunk, encoding) {
+    this._transformState.needTransform = false;
+    return Duplex2.prototype.push.call(this, chunk, encoding);
   };
-}
-var _require$codes = errorsBrowser.codes, ERR_MISSING_ARGS$3 = _require$codes.ERR_MISSING_ARGS, ERR_STREAM_DESTROYED$1 = _require$codes.ERR_STREAM_DESTROYED;
-function noop$5(err) {
-  if (err) throw err;
-}
-function isRequest$2(stream2) {
-  return stream2.setHeader && typeof stream2.abort === "function";
-}
-function destroyer$3(stream2, reading, writing, callback) {
-  callback = once$2(callback);
-  var closed = false;
-  stream2.on("close", function() {
-    closed = true;
-  });
-  if (eos$3 === void 0) eos$3 = endOfStream$1;
-  eos$3(stream2, {
-    readable: reading,
-    writable: writing
-  }, function(err) {
-    if (err) return callback(err);
-    closed = true;
-    callback();
-  });
-  var destroyed = false;
-  return function(err) {
-    if (closed) return;
-    if (destroyed) return;
-    destroyed = true;
-    if (isRequest$2(stream2)) return stream2.abort();
-    if (typeof stream2.destroy === "function") return stream2.destroy();
-    callback(err || new ERR_STREAM_DESTROYED$1("pipe"));
+  Transform2.prototype._transform = function(chunk, encoding, cb) {
+    cb(new ERR_METHOD_NOT_IMPLEMENTED2("_transform()"));
   };
-}
-function call(fn2) {
-  fn2();
-}
-function pipe$1(from2, to2) {
-  return from2.pipe(to2);
-}
-function popCallback$1(streams) {
-  if (!streams.length) return noop$5;
-  if (typeof streams[streams.length - 1] !== "function") return noop$5;
-  return streams.pop();
-}
-function pipeline$2() {
-  for (var _len = arguments.length, streams = new Array(_len), _key = 0; _key < _len; _key++) {
-    streams[_key] = arguments[_key];
-  }
-  var callback = popCallback$1(streams);
-  if (Array.isArray(streams[0])) streams = streams[0];
-  if (streams.length < 2) {
-    throw new ERR_MISSING_ARGS$3("streams");
-  }
-  var error2;
-  var destroys = streams.map(function(stream2, i3) {
-    var reading = i3 < streams.length - 1;
-    var writing = i3 > 0;
-    return destroyer$3(stream2, reading, writing, function(err) {
-      if (!error2) error2 = err;
-      if (err) destroys.forEach(call);
-      if (reading) return;
-      destroys.forEach(call);
-      callback(error2);
+  Transform2.prototype._write = function(chunk, encoding, cb) {
+    var ts2 = this._transformState;
+    ts2.writecb = cb;
+    ts2.writechunk = chunk;
+    ts2.writeencoding = encoding;
+    if (!ts2.transforming) {
+      var rs2 = this._readableState;
+      if (ts2.needTransform || rs2.needReadable || rs2.length < rs2.highWaterMark) this._read(rs2.highWaterMark);
+    }
+  };
+  Transform2.prototype._read = function(n4) {
+    var ts2 = this._transformState;
+    if (ts2.writechunk !== null && !ts2.transforming) {
+      ts2.transforming = true;
+      this._transform(ts2.writechunk, ts2.writeencoding, ts2.afterTransform);
+    } else {
+      ts2.needTransform = true;
+    }
+  };
+  Transform2.prototype._destroy = function(err, cb) {
+    Duplex2.prototype._destroy.call(this, err, function(err2) {
+      cb(err2);
     });
-  });
-  return streams.reduce(pipe$1);
+  };
+  function done(stream2, er2, data2) {
+    if (er2) return stream2.emit("error", er2);
+    if (data2 != null)
+      stream2.push(data2);
+    if (stream2._writableState.length) throw new ERR_TRANSFORM_WITH_LENGTH_0();
+    if (stream2._transformState.transforming) throw new ERR_TRANSFORM_ALREADY_TRANSFORMING();
+    return stream2.push(null);
+  }
+  return _stream_transform$1;
 }
-var pipeline_1$1 = pipeline$2;
-(function(module2, exports2) {
-  exports2 = module2.exports = require_stream_readable$1();
-  exports2.Stream = exports2;
-  exports2.Readable = exports2;
-  exports2.Writable = require_stream_writable$1();
-  exports2.Duplex = require_stream_duplex$1();
-  exports2.Transform = _stream_transform$1;
-  exports2.PassThrough = _stream_passthrough$1;
-  exports2.finished = endOfStream$1;
-  exports2.pipeline = pipeline_1$1;
-})(readableBrowser$1, readableBrowser$1.exports);
-var readableBrowserExports = readableBrowser$1.exports;
+var _stream_passthrough$1;
+var hasRequired_stream_passthrough$1;
+function require_stream_passthrough$1() {
+  if (hasRequired_stream_passthrough$1) return _stream_passthrough$1;
+  hasRequired_stream_passthrough$1 = 1;
+  _stream_passthrough$1 = PassThrough2;
+  var Transform2 = require_stream_transform$1();
+  inherits_browserExports(PassThrough2, Transform2);
+  function PassThrough2(options2) {
+    if (!(this instanceof PassThrough2)) return new PassThrough2(options2);
+    Transform2.call(this, options2);
+  }
+  PassThrough2.prototype._transform = function(chunk, encoding, cb) {
+    cb(null, chunk);
+  };
+  return _stream_passthrough$1;
+}
+var pipeline_1$1;
+var hasRequiredPipeline;
+function requirePipeline() {
+  if (hasRequiredPipeline) return pipeline_1$1;
+  hasRequiredPipeline = 1;
+  var eos2;
+  function once3(callback) {
+    var called = false;
+    return function() {
+      if (called) return;
+      called = true;
+      callback.apply(void 0, arguments);
+    };
+  }
+  var _require$codes = requireErrorsBrowser().codes, ERR_MISSING_ARGS2 = _require$codes.ERR_MISSING_ARGS, ERR_STREAM_DESTROYED2 = _require$codes.ERR_STREAM_DESTROYED;
+  function noop2(err) {
+    if (err) throw err;
+  }
+  function isRequest2(stream2) {
+    return stream2.setHeader && typeof stream2.abort === "function";
+  }
+  function destroyer2(stream2, reading, writing, callback) {
+    callback = once3(callback);
+    var closed = false;
+    stream2.on("close", function() {
+      closed = true;
+    });
+    if (eos2 === void 0) eos2 = requireEndOfStream();
+    eos2(stream2, {
+      readable: reading,
+      writable: writing
+    }, function(err) {
+      if (err) return callback(err);
+      closed = true;
+      callback();
+    });
+    var destroyed = false;
+    return function(err) {
+      if (closed) return;
+      if (destroyed) return;
+      destroyed = true;
+      if (isRequest2(stream2)) return stream2.abort();
+      if (typeof stream2.destroy === "function") return stream2.destroy();
+      callback(err || new ERR_STREAM_DESTROYED2("pipe"));
+    };
+  }
+  function call2(fn2) {
+    fn2();
+  }
+  function pipe2(from2, to2) {
+    return from2.pipe(to2);
+  }
+  function popCallback2(streams) {
+    if (!streams.length) return noop2;
+    if (typeof streams[streams.length - 1] !== "function") return noop2;
+    return streams.pop();
+  }
+  function pipeline2() {
+    for (var _len = arguments.length, streams = new Array(_len), _key = 0; _key < _len; _key++) {
+      streams[_key] = arguments[_key];
+    }
+    var callback = popCallback2(streams);
+    if (Array.isArray(streams[0])) streams = streams[0];
+    if (streams.length < 2) {
+      throw new ERR_MISSING_ARGS2("streams");
+    }
+    var error2;
+    var destroys = streams.map(function(stream2, i3) {
+      var reading = i3 < streams.length - 1;
+      var writing = i3 > 0;
+      return destroyer2(stream2, reading, writing, function(err) {
+        if (!error2) error2 = err;
+        if (err) destroys.forEach(call2);
+        if (reading) return;
+        destroys.forEach(call2);
+        callback(error2);
+      });
+    });
+    return streams.reduce(pipe2);
+  }
+  pipeline_1$1 = pipeline2;
+  return pipeline_1$1;
+}
+var hasRequiredReadableBrowser$1;
+function requireReadableBrowser$1() {
+  if (hasRequiredReadableBrowser$1) return readableBrowser$1.exports;
+  hasRequiredReadableBrowser$1 = 1;
+  (function(module2, exports2) {
+    exports2 = module2.exports = require_stream_readable$1();
+    exports2.Stream = exports2;
+    exports2.Readable = exports2;
+    exports2.Writable = require_stream_writable$1();
+    exports2.Duplex = require_stream_duplex$1();
+    exports2.Transform = require_stream_transform$1();
+    exports2.PassThrough = require_stream_passthrough$1();
+    exports2.finished = requireEndOfStream();
+    exports2.pipeline = requirePipeline();
+  })(readableBrowser$1, readableBrowser$1.exports);
+  return readableBrowser$1.exports;
+}
 var hashBase$1;
 var hasRequiredHashBase$1;
 function requireHashBase$1() {
   if (hasRequiredHashBase$1) return hashBase$1;
   hasRequiredHashBase$1 = 1;
-  var Buffer2 = safeBufferExports.Buffer;
-  var Transform2 = readableBrowserExports.Transform;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
+  var Transform2 = requireReadableBrowser$1().Transform;
   var inherits2 = inherits_browserExports;
   function throwIfNotStringOrBuffer(val, prefix) {
     if (!Buffer2.isBuffer(val) && typeof val !== "string") {
@@ -71748,7 +71820,7 @@ function requireMd5_js() {
   hasRequiredMd5_js = 1;
   var inherits2 = inherits_browserExports;
   var HashBase = requireHashBase$1();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var ARRAY16 = new Array(16);
   function MD5() {
     HashBase.call(this, 64);
@@ -71875,8 +71947,8 @@ var hasRequiredHashBase;
 function requireHashBase() {
   if (hasRequiredHashBase) return hashBase;
   hasRequiredHashBase = 1;
-  var Buffer2 = safeBufferExports.Buffer;
-  var Transform2 = readableBrowserExports.Transform;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
+  var Transform2 = requireReadableBrowser$1().Transform;
   var inherits2 = inherits_browserExports;
   function throwIfNotStringOrBuffer(val, prefix) {
     if (!Buffer2.isBuffer(val) && typeof val !== "string") {
@@ -72387,7 +72459,7 @@ function requireRipemd160() {
   return ripemd160$3;
 }
 var sha_js = { exports: {} };
-var Buffer$8 = safeBufferExports.Buffer;
+var Buffer$8 = requireSafeBuffer$1().Buffer;
 function Hash$8(blockSize, finalSize) {
   this._block = Buffer$8.alloc(blockSize);
   this._finalSize = finalSize;
@@ -72445,7 +72517,7 @@ Hash$8.prototype._update = function() {
 var hash$4 = Hash$8;
 var inherits$8 = inherits_browserExports;
 var Hash$7 = hash$4;
-var Buffer$7 = safeBufferExports.Buffer;
+var Buffer$7 = requireSafeBuffer$1().Buffer;
 var K$8 = [
   1518500249,
   1859775393,
@@ -72514,7 +72586,7 @@ Sha.prototype._hash = function() {
 var sha = Sha;
 var inherits$7 = inherits_browserExports;
 var Hash$6 = hash$4;
-var Buffer$6 = safeBufferExports.Buffer;
+var Buffer$6 = requireSafeBuffer$1().Buffer;
 var K$7 = [
   1518500249,
   1859775393,
@@ -72586,7 +72658,7 @@ Sha1.prototype._hash = function() {
 var sha1 = Sha1;
 var inherits$6 = inherits_browserExports;
 var Hash$5 = hash$4;
-var Buffer$5 = safeBufferExports.Buffer;
+var Buffer$5 = requireSafeBuffer$1().Buffer;
 var K$6 = [
   1116352408,
   1899447441,
@@ -72738,7 +72810,7 @@ var sha256$8 = Sha256$1;
 var inherits$5 = inherits_browserExports;
 var Sha256 = sha256$8;
 var Hash$4 = hash$4;
-var Buffer$4 = safeBufferExports.Buffer;
+var Buffer$4 = requireSafeBuffer$1().Buffer;
 var W$5 = new Array(64);
 function Sha224() {
   this.init();
@@ -72771,7 +72843,7 @@ Sha224.prototype._hash = function() {
 var sha224$1 = Sha224;
 var inherits$4 = inherits_browserExports;
 var Hash$3 = hash$4;
-var Buffer$3 = safeBufferExports.Buffer;
+var Buffer$3 = requireSafeBuffer$1().Buffer;
 var K$5 = [
   1116352408,
   3609767458,
@@ -73108,7 +73180,7 @@ var sha512$4 = Sha512;
 var inherits$3 = inherits_browserExports;
 var SHA512$1 = sha512$4;
 var Hash$2 = hash$4;
-var Buffer$2 = safeBufferExports.Buffer;
+var Buffer$2 = requireSafeBuffer$1().Buffer;
 var W$3 = new Array(160);
 function Sha384() {
   this.init();
@@ -73175,10 +73247,10 @@ function requireStreamBrowserify() {
   Stream2.Readable = require_stream_readable$1();
   Stream2.Writable = require_stream_writable$1();
   Stream2.Duplex = require_stream_duplex$1();
-  Stream2.Transform = _stream_transform$1;
-  Stream2.PassThrough = _stream_passthrough$1;
-  Stream2.finished = endOfStream$1;
-  Stream2.pipeline = pipeline_1$1;
+  Stream2.Transform = require_stream_transform$1();
+  Stream2.PassThrough = require_stream_passthrough$1();
+  Stream2.finished = requireEndOfStream();
+  Stream2.pipeline = requirePipeline();
   Stream2.Stream = Stream2;
   function Stream2() {
     EE2.call(this);
@@ -73246,7 +73318,7 @@ var hasRequiredCipherBase;
 function requireCipherBase() {
   if (hasRequiredCipherBase) return cipherBase;
   hasRequiredCipherBase = 1;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var Transform2 = requireStreamBrowserify().Transform;
   var StringDecoder2 = string_decoder.StringDecoder;
   var inherits2 = inherits_browserExports;
@@ -73328,14 +73400,14 @@ function requireCipherBase() {
       next(err);
     }
   };
-  CipherBase.prototype._flush = function(done2) {
+  CipherBase.prototype._flush = function(done) {
     var err;
     try {
       this.push(this.__final());
     } catch (e3) {
       err = e3;
     }
-    done2(err);
+    done(err);
   };
   CipherBase.prototype._finalOrDigest = function(outputEnc) {
     var outData = this.__final() || Buffer2.alloc(0);
@@ -73396,7 +73468,7 @@ function requireLegacy() {
   if (hasRequiredLegacy) return legacy$1;
   hasRequiredLegacy = 1;
   var inherits2 = inherits_browserExports;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var Base2 = requireCipherBase();
   var ZEROS = Buffer2.alloc(128);
   var blocksize = 64;
@@ -73450,7 +73522,7 @@ function requireBrowser$9() {
   var inherits2 = inherits_browserExports;
   var Legacy = requireLegacy();
   var Base2 = requireCipherBase();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var md52 = requireMd5();
   var RIPEMD1602 = requireRipemd160();
   var sha2 = sha_jsExports;
@@ -73715,7 +73787,7 @@ var hasRequiredToBuffer;
 function requireToBuffer() {
   if (hasRequiredToBuffer) return toBuffer$3;
   hasRequiredToBuffer = 1;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   toBuffer$3 = function(thing, encoding, name2) {
     if (Buffer2.isBuffer(thing)) {
       return thing;
@@ -73737,7 +73809,7 @@ function requireSyncBrowser() {
   var md52 = requireMd5();
   var RIPEMD1602 = requireRipemd160();
   var sha2 = sha_jsExports;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var checkParameters = requirePrecondition();
   var defaultEncoding = requireDefaultEncoding();
   var toBuffer2 = requireToBuffer();
@@ -73826,7 +73898,7 @@ var hasRequiredAsync;
 function requireAsync() {
   if (hasRequiredAsync) return async;
   hasRequiredAsync = 1;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var checkParameters = requirePrecondition();
   var defaultEncoding = requireDefaultEncoding();
   var sync = requireSyncBrowser();
@@ -75074,7 +75146,7 @@ function requireBrowserifyDes() {
   var CipherBase = requireCipherBase();
   var des2 = requireDes();
   var inherits2 = inherits_browserExports;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var modes2 = {
     "des-ede3-cbc": des2.CBC.instantiate(des2.EDE),
     "des-ede3": des2.EDE,
@@ -75176,7 +75248,7 @@ var hasRequiredCfb;
 function requireCfb() {
   if (hasRequiredCfb) return cfb;
   hasRequiredCfb = 1;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var xor2 = requireBufferXor();
   function encryptStart(self2, data2, decrypt2) {
     var len = data2.length;
@@ -75211,7 +75283,7 @@ var hasRequiredCfb8;
 function requireCfb8() {
   if (hasRequiredCfb8) return cfb8;
   hasRequiredCfb8 = 1;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   function encryptByte(self2, byteParam, decrypt2) {
     var pad3 = self2._cipher.encryptBlock(self2._prev);
     var out = pad3[0] ^ byteParam;
@@ -75237,7 +75309,7 @@ var hasRequiredCfb1;
 function requireCfb1() {
   if (hasRequiredCfb1) return cfb1;
   hasRequiredCfb1 = 1;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   function encryptByte(self2, byteParam, decrypt2) {
     var pad3;
     var i3 = -1;
@@ -75322,7 +75394,7 @@ function requireCtr() {
   if (hasRequiredCtr) return ctr;
   hasRequiredCtr = 1;
   var xor2 = requireBufferXor();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var incr32 = requireIncr32();
   function getBlock2(self2) {
     var out = self2._cipher.encryptBlockRaw(self2._prev);
@@ -75572,7 +75644,7 @@ var hasRequiredAes;
 function requireAes() {
   if (hasRequiredAes) return aes;
   hasRequiredAes = 1;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   function asUInt32Array(buf) {
     if (!Buffer2.isBuffer(buf)) buf = Buffer2.from(buf);
     var len = buf.length / 4 | 0;
@@ -75747,7 +75819,7 @@ var hasRequiredGhash;
 function requireGhash() {
   if (hasRequiredGhash) return ghash;
   hasRequiredGhash = 1;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var ZEROES = Buffer2.alloc(16, 0);
   function toArray2(buf) {
     return [
@@ -75826,7 +75898,7 @@ function requireAuthCipher() {
   if (hasRequiredAuthCipher) return authCipher;
   hasRequiredAuthCipher = 1;
   var aes2 = requireAes();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var Transform2 = requireCipherBase();
   var inherits2 = inherits_browserExports;
   var GHASH = requireGhash();
@@ -75929,7 +76001,7 @@ function requireStreamCipher() {
   if (hasRequiredStreamCipher) return streamCipher;
   hasRequiredStreamCipher = 1;
   var aes2 = requireAes();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var Transform2 = requireCipherBase();
   var inherits2 = inherits_browserExports;
   function StreamCipher(mode2, key2, iv, decrypt2) {
@@ -75956,7 +76028,7 @@ var hasRequiredEvp_bytestokey;
 function requireEvp_bytestokey() {
   if (hasRequiredEvp_bytestokey) return evp_bytestokey;
   hasRequiredEvp_bytestokey = 1;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var MD5 = requireMd5_js();
   function EVP_BytesToKey(password, salt, keyBits, ivLen) {
     if (!Buffer2.isBuffer(password)) password = Buffer2.from(password, "binary");
@@ -76000,7 +76072,7 @@ function requireEncrypter() {
   hasRequiredEncrypter = 1;
   var MODES = requireModes$1();
   var AuthCipher = requireAuthCipher();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var StreamCipher = requireStreamCipher();
   var Transform2 = requireCipherBase();
   var aes2 = requireAes();
@@ -76096,7 +76168,7 @@ function requireDecrypter() {
   if (hasRequiredDecrypter) return decrypter;
   hasRequiredDecrypter = 1;
   var AuthCipher = requireAuthCipher();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var MODES = requireModes$1();
   var StreamCipher = requireStreamCipher();
   var Transform2 = requireCipherBase();
@@ -82027,7 +82099,7 @@ var hasRequiredGeneratePrime;
 function requireGeneratePrime() {
   if (hasRequiredGeneratePrime) return generatePrime;
   hasRequiredGeneratePrime = 1;
-  var randomBytes2 = requireBrowser$b();
+  var randomBytes2 = requireBrowser$c();
   generatePrime = findPrime;
   findPrime.simpleSieve = simpleSieve;
   findPrime.fermatTest = fermatTest;
@@ -82175,7 +82247,7 @@ function requireDh() {
   var THREE = new BN2(3);
   var SEVEN = new BN2(7);
   var primes = requireGeneratePrime();
-  var randomBytes2 = requireBrowser$b();
+  var randomBytes2 = requireBrowser$c();
   dh = DH;
   function setPublicKey(pub2, enc) {
     enc = enc || "utf8";
@@ -82713,7 +82785,7 @@ function require_stream_writable() {
   var util2 = Object.create(requireUtil());
   util2.inherits = inherits_browserExports;
   var internalUtil = {
-    deprecate: browser$f
+    deprecate: requireBrowser$b()
   };
   var Stream2 = requireStreamBrowser();
   var Buffer2 = requireSafeBuffer().Buffer;
@@ -83902,7 +83974,7 @@ function require_stream_transform() {
   var util2 = Object.create(requireUtil());
   util2.inherits = inherits_browserExports;
   util2.inherits(Transform2, Duplex2);
-  function afterTransform2(er2, data2) {
+  function afterTransform(er2, data2) {
     var ts2 = this._transformState;
     ts2.transforming = false;
     var cb = ts2.writecb;
@@ -83924,7 +83996,7 @@ function require_stream_transform() {
     if (!(this instanceof Transform2)) return new Transform2(options2);
     Duplex2.call(this, options2);
     this._transformState = {
-      afterTransform: afterTransform2.bind(this),
+      afterTransform: afterTransform.bind(this),
       needTransform: false,
       transforming: false,
       writecb: null,
@@ -83943,10 +84015,10 @@ function require_stream_transform() {
     var _this = this;
     if (typeof this._flush === "function") {
       this._flush(function(er2, data2) {
-        done2(_this, er2, data2);
+        done(_this, er2, data2);
       });
     } else {
-      done2(this, null, null);
+      done(this, null, null);
     }
   }
   Transform2.prototype.push = function(chunk, encoding) {
@@ -83982,7 +84054,7 @@ function require_stream_transform() {
       _this2.emit("close");
     });
   };
-  function done2(stream2, er2, data2) {
+  function done(stream2, er2, data2) {
     if (er2) return stream2.emit("error", er2);
     if (data2 != null)
       stream2.push(data2);
@@ -84033,8 +84105,8 @@ function requireBrowserifyRsa() {
   if (hasRequiredBrowserifyRsa) return browserifyRsa;
   hasRequiredBrowserifyRsa = 1;
   var BN2 = bnExports$1;
-  var randomBytes2 = requireBrowser$b();
-  var Buffer2 = safeBufferExports.Buffer;
+  var randomBytes2 = requireBrowser$c();
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   function getr(priv2) {
     var len = priv2.modulus.byteLength();
     var r3;
@@ -88733,7 +88805,7 @@ function requireFixProc() {
   var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
   var evp = requireEvp_bytestokey();
   var ciphers = requireBrowser$7();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   fixProc = function(okey, password) {
     var key2 = okey.toString();
     var match = key2.match(findProc);
@@ -88770,7 +88842,7 @@ function requireParseAsn1() {
   var fixProc2 = requireFixProc();
   var ciphers = requireBrowser$7();
   var compat = requireBrowser$8();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   function decrypt2(data2, password) {
     var salt = data2.algorithm.decrypt.kde.kdeparams.salt;
     var iters = parseInt(data2.algorithm.decrypt.kde.kdeparams.iters.toString(), 10);
@@ -88882,7 +88954,7 @@ var hasRequiredSign;
 function requireSign() {
   if (hasRequiredSign) return sign$1.exports;
   hasRequiredSign = 1;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var createHmac = requireBrowser$9();
   var crt = requireBrowserifyRsa();
   var EC2 = requireElliptic().ec;
@@ -89036,7 +89108,7 @@ var hasRequiredVerify;
 function requireVerify() {
   if (hasRequiredVerify) return verify_1;
   hasRequiredVerify = 1;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var BN2 = bnExports$1;
   var EC2 = requireElliptic().ec;
   var parseKeys = requireParseAsn1();
@@ -89126,7 +89198,7 @@ var hasRequiredBrowser$4;
 function requireBrowser$4() {
   if (hasRequiredBrowser$4) return browser$8;
   hasRequiredBrowser$4 = 1;
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   var createHash2 = requireBrowser$a();
   var stream2 = requireReadableBrowser();
   var inherits2 = inherits_browserExports;
@@ -89149,9 +89221,9 @@ function requireBrowser$4() {
     this._signType = data2.sign;
   }
   inherits2(Sign, stream2.Writable);
-  Sign.prototype._write = function _write(data2, _3, done2) {
+  Sign.prototype._write = function _write(data2, _3, done) {
     this._hash.update(data2);
-    done2();
+    done();
   };
   Sign.prototype.update = function update10(data2, enc) {
     this._hash.update(typeof data2 === "string" ? Buffer2.from(data2, enc) : data2);
@@ -89174,9 +89246,9 @@ function requireBrowser$4() {
     this._signType = data2.sign;
   }
   inherits2(Verify, stream2.Writable);
-  Verify.prototype._write = function _write(data2, _3, done2) {
+  Verify.prototype._write = function _write(data2, _3, done) {
     this._hash.update(data2);
-    done2();
+    done();
   };
   Verify.prototype.update = function update10(data2, enc) {
     this._hash.update(typeof data2 === "string" ? Buffer2.from(data2, enc) : data2);
@@ -92137,7 +92209,7 @@ function requireMgf() {
   if (hasRequiredMgf) return mgf;
   hasRequiredMgf = 1;
   var createHash2 = requireBrowser$a();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   mgf = function(seed, len) {
     var t2 = Buffer2.alloc(0);
     var i3 = 0;
@@ -94985,7 +95057,7 @@ function requireWithPublic() {
   if (hasRequiredWithPublic) return withPublic_1;
   hasRequiredWithPublic = 1;
   var BN2 = requireBn();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   function withPublic(paddedMsg, key2) {
     return Buffer2.from(paddedMsg.toRed(BN2.mont(key2.modulus)).redPow(new BN2(key2.publicExponent)).fromRed().toArray());
   }
@@ -94998,14 +95070,14 @@ function requirePublicEncrypt() {
   if (hasRequiredPublicEncrypt) return publicEncrypt;
   hasRequiredPublicEncrypt = 1;
   var parseKeys = requireParseAsn1();
-  var randomBytes2 = requireBrowser$b();
+  var randomBytes2 = requireBrowser$c();
   var createHash2 = requireBrowser$a();
   var mgf2 = requireMgf();
   var xor2 = requireXor();
   var BN2 = requireBn();
   var withPublic = requireWithPublic();
   var crt = requireBrowserifyRsa();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   publicEncrypt = function publicEncrypt2(publicKey, msg, reverse) {
     var padding2;
     if (publicKey.padding) {
@@ -95097,7 +95169,7 @@ function requirePrivateDecrypt() {
   var crt = requireBrowserifyRsa();
   var createHash2 = requireBrowser$a();
   var withPublic = requireWithPublic();
-  var Buffer2 = safeBufferExports.Buffer;
+  var Buffer2 = requireSafeBuffer$1().Buffer;
   privateDecrypt = function privateDecrypt2(privateKey, enc, reverse) {
     var padding2;
     if (privateKey.padding) {
@@ -95216,8 +95288,8 @@ function requireBrowser$1() {
   function oldBrowser() {
     throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
   }
-  var safeBuffer2 = safeBufferExports;
-  var randombytes = requireBrowser$b();
+  var safeBuffer2 = requireSafeBuffer$1();
+  var randombytes = requireBrowser$c();
   var Buffer2 = safeBuffer2.Buffer;
   var kBufferMaxLength = safeBuffer2.kMaxLength;
   var crypto2 = globalThis.crypto || globalThis.msCrypto;
@@ -95314,7 +95386,7 @@ var hasRequiredCryptoBrowserify;
 function requireCryptoBrowserify() {
   if (hasRequiredCryptoBrowserify) return cryptoBrowserify;
   hasRequiredCryptoBrowserify = 1;
-  cryptoBrowserify.randomBytes = cryptoBrowserify.rng = cryptoBrowserify.pseudoRandomBytes = cryptoBrowserify.prng = requireBrowser$b();
+  cryptoBrowserify.randomBytes = cryptoBrowserify.rng = cryptoBrowserify.pseudoRandomBytes = cryptoBrowserify.prng = requireBrowser$c();
   cryptoBrowserify.createHash = cryptoBrowserify.Hash = requireBrowser$a();
   cryptoBrowserify.createHmac = cryptoBrowserify.Hmac = requireBrowser$9();
   var algos2 = requireAlgos();
@@ -99346,12 +99418,12 @@ class RunningEvent {
     this._listeners.push({ listener, once: once3 });
   }
   removeListener(listener) {
-    let done2 = false;
+    let done = false;
     this._listeners = this._listeners.filter((item) => {
-      if (done2 || item.listener !== listener) {
+      if (done || item.listener !== listener) {
         return true;
       }
-      done2 = true;
+      done = true;
       return false;
     });
   }
@@ -103833,12 +103905,12 @@ let BaseProvider$1 = class BaseProvider3 extends Provider {
       }
       return new Promise((resolve, reject) => {
         const cancelFuncs = [];
-        let done2 = false;
+        let done = false;
         const alreadyDone = function() {
-          if (done2) {
+          if (done) {
             return true;
           }
-          done2 = true;
+          done = true;
           cancelFuncs.forEach((func2) => {
             func2();
           });
@@ -103861,12 +103933,12 @@ let BaseProvider$1 = class BaseProvider3 extends Provider {
           let lastBlockNumber = replaceable.startBlock;
           let scannedBlock = null;
           const replaceHandler = (blockNumber) => __awaiter$e(this, void 0, void 0, function* () {
-            if (done2) {
+            if (done) {
               return;
             }
             yield stall$1(1e3);
             this.getTransactionCount(replaceable.from).then((nonce) => __awaiter$e(this, void 0, void 0, function* () {
-              if (done2) {
+              if (done) {
                 return;
               }
               if (nonce <= replaceable.nonce) {
@@ -103885,7 +103957,7 @@ let BaseProvider$1 = class BaseProvider3 extends Provider {
                   }
                 }
                 while (scannedBlock <= blockNumber) {
-                  if (done2) {
+                  if (done) {
                     return;
                   }
                   const block = yield this.getBlockWithTransactions(scannedBlock);
@@ -103895,7 +103967,7 @@ let BaseProvider$1 = class BaseProvider3 extends Provider {
                       return;
                     }
                     if (tx.from === replaceable.from && tx.nonce === replaceable.nonce) {
-                      if (done2) {
+                      if (done) {
                         return;
                       }
                       const receipt2 = yield this.waitForTransaction(tx.hash, confirmations);
@@ -103921,18 +103993,18 @@ let BaseProvider$1 = class BaseProvider3 extends Provider {
                   scannedBlock++;
                 }
               }
-              if (done2) {
+              if (done) {
                 return;
               }
               this.once("block", replaceHandler);
             }), (error2) => {
-              if (done2) {
+              if (done) {
                 return;
               }
               this.once("block", replaceHandler);
             });
           });
-          if (done2) {
+          if (done) {
             return;
           }
           this.once("block", replaceHandler);
@@ -133267,12 +133339,12 @@ function poll(func2, options2) {
   }
   return new Promise(function(resolve, reject) {
     let timer2 = null;
-    let done2 = false;
+    let done = false;
     const cancel = () => {
-      if (done2) {
+      if (done) {
         return false;
       }
-      done2 = true;
+      done = true;
       if (timer2) {
         clearTimeout(timer2);
       }
@@ -133297,7 +133369,7 @@ function poll(func2, options2) {
           options2.oncePoll.once("poll", check);
         } else if (options2.onceBlock) {
           options2.onceBlock.once("block", check);
-        } else if (!done2) {
+        } else if (!done) {
           attempt++;
           if (attempt > retryLimit) {
             if (cancel()) {
@@ -135888,7 +135960,7 @@ var localforage$1 = { exports: {} };
       var sameValue = function sameValue2(x3, y3) {
         return x3 === y3 || typeof x3 === "number" && typeof y3 === "number" && isNaN(x3) && isNaN(y3);
       };
-      var includes2 = function includes22(array2, searchElement) {
+      var includes = function includes2(array2, searchElement) {
         var len = array2.length;
         var i3 = 0;
         while (i3 < len) {
@@ -136006,7 +136078,7 @@ var localforage$1 = { exports: {} };
               var driverMethods = LibraryMethods.concat("_initStorage");
               for (var i3 = 0, len = driverMethods.length; i3 < len; i3++) {
                 var driverMethodName = driverMethods[i3];
-                var isRequired = !includes2(OptionalDriverMethods, driverMethodName);
+                var isRequired = !includes(OptionalDriverMethods, driverMethodName);
                 if ((isRequired || driverObject[driverMethodName]) && typeof driverObject[driverMethodName] !== "function") {
                   reject(complianceError);
                   return;
@@ -155299,8 +155371,8 @@ class WT extends Transport {
         encoderStream.readable.pipeTo(stream2.writable);
         this._writer = encoderStream.writable.getWriter();
         const read = () => {
-          reader.read().then(({ done: done2, value: value2 }) => {
-            if (done2) {
+          reader.read().then(({ done, value: value2 }) => {
+            if (done) {
               return;
             }
             this.onPacket(value2);
@@ -161071,10 +161143,10 @@ hideStackFrames((value2, name2, positive = false) => {
     throw new ERR_OUT_OF_RANGE$1(name2, `>= ${min2} && <= ${max2}`, value2);
   }
 });
-hideStackFrames((value2, name2, oneOf2) => {
-  if (!ArrayPrototypeIncludes(oneOf2, value2)) {
+hideStackFrames((value2, name2, oneOf) => {
+  if (!ArrayPrototypeIncludes(oneOf, value2)) {
     const allowed = ArrayPrototypeJoin(
-      ArrayPrototypeMap(oneOf2, (v2) => typeof v2 === "string" ? `'${v2}'` : String$1(v2)),
+      ArrayPrototypeMap(oneOf, (v2) => typeof v2 === "string" ? `'${v2}'` : String$1(v2)),
       ", "
     );
     const reason = "must be one of: " + allowed;
@@ -162348,9 +162420,9 @@ function from$1(Readable2, iterable, opts) {
     const hadError = error2 !== void 0 && error2 !== null;
     const hasThrow = typeof iterator.throw === "function";
     if (hadError && hasThrow) {
-      const { value: value2, done: done2 } = await iterator.throw(error2);
+      const { value: value2, done } = await iterator.throw(error2);
       await value2;
-      if (done2) {
+      if (done) {
         return;
       }
     }
@@ -162362,8 +162434,8 @@ function from$1(Readable2, iterable, opts) {
   async function next() {
     for (; ; ) {
       try {
-        const { value: value2, done: done2 } = isAsync ? await iterator.next() : iterator.next();
-        if (done2) {
+        const { value: value2, done } = isAsync ? await iterator.next() : iterator.next();
+        if (done) {
           readable2.push(null);
         } else {
           const res = value2 && typeof value2.then === "function" ? await value2 : value2;
@@ -164170,9 +164242,9 @@ function requireDuplexify() {
         while (true) {
           const _promise = promise;
           promise = null;
-          const { chunk, done: done2, cb } = await _promise;
+          const { chunk, done, cb } = await _promise;
           process2.nextTick(cb);
-          if (done2) return;
+          if (done) return;
           if (signal.aborted)
             throw new AbortError3(void 0, {
               cause: signal.reason
@@ -165116,11 +165188,11 @@ var compose$1 = function compose2(...streams) {
       d4._read = async function() {
         while (true) {
           try {
-            const { value: value2, done: done2 } = await reader.read();
+            const { value: value2, done } = await reader.read();
             if (!d4.push(value2)) {
               return;
             }
-            if (done2) {
+            if (done) {
               d4.push(null);
               return;
             }
@@ -165224,10 +165296,10 @@ function map$1(fn2, options2) {
     };
     let next;
     let resume;
-    let done2 = false;
+    let done = false;
     let cnt = 0;
     function onCatch() {
-      done2 = true;
+      done = true;
       afterItemProcessed();
     }
     function afterItemProcessed() {
@@ -165235,7 +165307,7 @@ function map$1(fn2, options2) {
       maybeResume();
     }
     function maybeResume() {
-      if (resume && !done2 && cnt < concurrency && queue2.length < highWaterMark) {
+      if (resume && !done && cnt < concurrency && queue2.length < highWaterMark) {
         resume();
         resume = null;
       }
@@ -165243,7 +165315,7 @@ function map$1(fn2, options2) {
     async function pump() {
       try {
         for await (let val of stream2) {
-          if (done2) {
+          if (done) {
             return;
           }
           if (signal.aborted) {
@@ -165265,7 +165337,7 @@ function map$1(fn2, options2) {
             next();
             next = null;
           }
-          if (!done2 && (queue2.length >= highWaterMark || cnt >= concurrency)) {
+          if (!done && (queue2.length >= highWaterMark || cnt >= concurrency)) {
             await new Promise$1((resolve) => {
               resume = resolve;
             });
@@ -165277,7 +165349,7 @@ function map$1(fn2, options2) {
         PromisePrototypeThen(val, afterItemProcessed, onCatch);
         queue2.push(val);
       } finally {
-        done2 = true;
+        done = true;
         if (next) {
           next();
           next = null;
@@ -165306,7 +165378,7 @@ function map$1(fn2, options2) {
         });
       }
     } finally {
-      done2 = true;
+      done = true;
       if (resume) {
         resume();
         resume = null;
@@ -179929,7 +180001,7 @@ class I18n extends EventEmitter {
       this.resolvedLanguage = void 0;
       this.setResolvedLanguage(l2);
     };
-    const done2 = (err, l2) => {
+    const done = (err, l2) => {
       if (l2) {
         setLngProps(l2);
         this.translator.changeLanguage(l2);
@@ -179957,7 +180029,7 @@ class I18n extends EventEmitter {
         if (this.services.languageDetector && this.services.languageDetector.cacheUserLanguage) this.services.languageDetector.cacheUserLanguage(l2);
       }
       this.loadResources(l2, (err) => {
-        done2(err, l2);
+        done(err, l2);
       });
     };
     if (!lng && this.services.languageDetector && !this.services.languageDetector.async) {
@@ -187764,14 +187836,14 @@ const BaseInput = ({
   const handleChange = (e3) => {
     onChange == null ? void 0 : onChange(e3.target.value);
   };
-  const baseContainerClass = variant === "send" ? "w-full mb-3" : "flex-1";
-  const baseLabelClass = "block text-text-secondary text-1sm";
-  const baseInputClass = `${variant === "send" ? "w-full" : ""} p-2 rounded-md text-secondary border border-border-primary bg-bg-primary outline-none transition-all duration-300 ease-in-out focus:border-black`;
+  const baseContainerClass = variant === "send" ? "w-full mb-3 text-left" : "flex-1 text-left";
+  const baseLabelClass = "block text-text-secondary text-1sm text-left";
+  const baseInputClass = `${variant === "send" ? "w-full" : ""} p-2 rounded-md text-secondary text-left border border-border-primary bg-bg-primary outline-none transition-all duration-300 ease-in-out focus:border-black`;
   const baseErrorClass = "text-red-500 text-xs mt-1";
   const baseHelpTextClass = "text-text-secondary text-xs mt-1";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `${baseContainerClass} ${containerClassName} ${className}`, children: [
     label && /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: `${baseLabelClass} ${labelClassName}`, children: label }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative flex text-sm", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative flex text-sm text-left", children: [
       leftElement && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute left-2 top-1/2 transform -translate-y-1/2", children: leftElement }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "input",
@@ -188672,7 +188744,7 @@ const PaymasterPanel = () => {
           onClick: () => setIsFlipped(!isFlipped)
         }
       ) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm text-text-secondary", children: "Select Payment Method" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm text-text-secondary text-left", children: "Select Payment Method" }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
@@ -199270,7 +199342,7 @@ class MobileRelay extends WalletLinkRelay_1$1.WalletLinkRelay {
   }
 }
 MobileRelay$1.MobileRelay = MobileRelay;
-const { Transform: Transform$1 } = readableBrowserExports;
+const { Transform: Transform$1 } = requireReadableBrowser$1();
 var keccak$2 = (KeccakState) => class Keccak5 extends Transform$1 {
   constructor(rate, capacity, delimitedSuffix, hashBitLength, options2) {
     super(options2);
@@ -199330,7 +199402,7 @@ var keccak$2 = (KeccakState) => class Keccak5 extends Transform$1 {
     return clone2;
   }
 };
-const { Transform } = readableBrowserExports;
+const { Transform } = requireReadableBrowser$1();
 var shake = (KeccakState) => class Shake extends Transform {
   constructor(rate, capacity, delimitedSuffix, options2) {
     super(options2);
@@ -200726,8 +200798,8 @@ function print(value2) {
   return typeof value2 === "string" ? JSON.stringify(value2) : `${value2}`;
 }
 function shiftIterator(input) {
-  const { done: done2, value: value2 } = input.next();
-  return done2 ? void 0 : value2;
+  const { done, value: value2 } = input.next();
+  return done ? void 0 : value2;
 }
 function toFailure(result, context2, struct2, value2) {
   if (result === true) {
@@ -204085,10 +204157,10 @@ function createIdRemapMiddleware() {
     const newId = getUniqueId_1.getUniqueId();
     req.id = newId;
     res.id = newId;
-    next((done2) => {
+    next((done) => {
       req.id = originalId;
       res.id = originalId;
-      done2();
+      done();
     });
   };
 }

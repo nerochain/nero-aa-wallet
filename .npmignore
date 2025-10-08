@@ -1,0 +1,60 @@
+# Source files
+src/
+__tests__/
+*.test.ts
+*.test.tsx
+
+# Config files
+.vscode/
+.husky/
+.storybook/
+tsconfig.json
+tsconfig.build.json
+vite.config.ts
+vitest.config.ts
+tailwind.config.ts
+postcss.config.js
+prettier.config.js
+eslint.config.js
+nerowallet.config.ts
+
+# Development files
+index.html
+*.log
+*.lock
+yarn.lock
+node_modules/
+
+# Build artifacts
+.cache/
+coverage/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+
+# Documentation (keep README.md)
+docs/
+
+# Scripts
+scripts/
+
+# Demo and test files
+public/
+header.jpg
+
+# IDE
+.DS_Store
+*.swp
+*.swo
+*~
+.idea/
+*.iml
+
+# Misc
+*.md
+!README.md

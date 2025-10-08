@@ -49,6 +49,7 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: 'dist/app',
       minify: false,
+      sourcemap: true,
       lib: {
         entry: resolve(__dirname, 'src/index.tsx'),
         name: 'NeroWallet',
@@ -58,12 +59,30 @@ export default defineConfig(({ mode }) => {
       cssCodeSplit: false,
       cssMinify: false,
       rollupOptions: {
-        external: ['react', 'react-dom'],
+        external: [
+          'react',
+          'react-dom',
+          'react/jsx-runtime',
+          '@rainbow-me/rainbowkit',
+          '@tanstack/react-query',
+          'wagmi',
+          'viem',
+          '@web3auth/base',
+          '@web3auth/auth-adapter',
+          '@web3auth/ethereum-provider',
+          '@web3auth/modal',
+          '@web3auth/web3auth-wagmi-connector',
+        ],
         output: {
           inlineDynamicImports: true,
+          assetFileNames: (assetInfo) => {
+            if (assetInfo.name === 'style.css') return 'style.css'
+            return assetInfo.name || 'asset'
+          },
           globals: {
             react: 'React',
             'react-dom': 'ReactDOM',
+            'react/jsx-runtime': 'jsxRuntime',
           },
         },
       },

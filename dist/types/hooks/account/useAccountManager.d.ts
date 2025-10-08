@@ -1,1 +1,1 @@
-export declare const useAccountManager: () => import("../../types").AccountManagerContextProps;
+export declare const useAccountManager: () => import("../..").AccountManagerContextProps;

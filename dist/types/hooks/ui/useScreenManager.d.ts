@@ -1,1 +1,1 @@
-export declare const useScreenManager: () => import("../../types").ScreenManagerContextType;
+export declare const useScreenManager: () => import("../..").ScreenManagerContextType;

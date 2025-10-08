@@ -80,4 +80,45 @@ export const SocialWallet: React.FC<SocialWalletProps> = ({
   )
 }
 
-export { useAAtransfer, useSignature, useSendUserOp, useConfig, useAccountManager }
+// Export hooks for developers
+export {
+  useAAtransfer,
+  useSignature,
+  useSendUserOp,
+  useConfig,
+  useAccountManager,
+  useScreenManager,
+  usePaymasterContext,
+  useTokenContext,
+  useNFTContext,
+  useSendContext,
+  useMultiSender,
+  useTransactionContext,
+} from '@/hooks'
+
+// Export types
+export type {
+  WalletConfig,
+  ConfigContextProps,
+  SignatureContextProps,
+  TokenContextType,
+  NFTContextType,
+  PaymasterContextType,
+  TransactionContextProps,
+  SendContextProps,
+  SendUserOpContextProps,
+  ScreenManagerContextType,
+  AccountManagerContextProps,
+} from '@/types'
+
+// Export utility types
+export type { Token, Activity, Transaction, Screen } from '@/types'
+
+// Export configuration helpers
+export {
+  createWalletConfig,
+  createMultiChainConfig,
+  NERO_TESTNET_PRESET,
+  NERO_MAINNET_PRESET,
+} from '@/config/presets'
+export type { SimpleWalletConfig } from '@/config/presets'

@@ -1,6 +1,28 @@
 {
-  "name": "nero-wallet",
-  "version": "0.0.0",
+  "name": "@nerochain/nero-wallet",
+  "version": "1.0.0",
+  "description": "NERO Account Abstraction (AA) Wallet - A social login wallet with gasless transactions for Web3 applications",
+  "author": "NERO Chain",
+  "license": "MIT",
+  "keywords": [
+    "nero",
+    "wallet",
+    "account-abstraction",
+    "web3",
+    "ethereum",
+    "social-login",
+    "gasless",
+    "paymaster",
+    "erc4337"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nerochain/nero-aa-wallet"
+  },
+  "bugs": {
+    "url": "https://github.com/nerochain/nero-aa-wallet/issues"
+  },
+  "homepage": "https://github.com/nerochain/nero-aa-wallet#readme",
   "type": "module",
   "main": "./dist/app/bundle.js",
   "module": "./dist/app/bundle.js",
@@ -8,17 +30,25 @@
   "exports": {
     ".": {
       "import": "./dist/app/bundle.js",
-      "require": "./dist/app/bundle.cjs.js",
       "types": "./dist/types/index.d.ts"
     },
-    "./index.css": "./dist/app/style.css"
+    "./styles.css": "./dist/app/style.css"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "dev": "vite",
     "dev:demo": "vite --mode demo",
     "build": "ITE_USER_NODE_ENV=build tsc --project tsconfig.build.json && vite build --mode build",
     "build:demo": "vite build --mode demo",
     "build:env": "VITE_USER_NODE_ENV=build tsc --project tsconfig.build.json && vite build --mode build",
+    "prepublishOnly": "yarn build",
     "test": "vitest run --reporter=verbose src/__tests__/security-core.test.ts src/__tests__/utils-security.test.ts src/__tests__/storage-quota-component.test.ts",
     "test:watch": "vitest watch src/__tests__/security-core.test.ts src/__tests__/utils-security.test.ts",
     "test:coverage": "vitest run --coverage src/__tests__/security-core.test.ts src/__tests__/utils-security.test.ts",

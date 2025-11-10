@@ -1,6 +1,7 @@
 import useSWR from 'swr'
 import { fetcher } from '@/helper/fetcher'
-import { useSignature, useConfig } from '@/hooks'
+import { useSignature } from '@/hooks/account/useSignature'
+import { useConfig } from '@/hooks/operation/useConfig'
 import { UserTokensResponse } from '@/types'
 
 export const useUserTokens = (): {

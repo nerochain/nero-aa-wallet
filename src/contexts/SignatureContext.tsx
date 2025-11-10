@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useState } from 'react'
 import { useAccount } from 'wagmi'
-import { useAccountManager } from '@/hooks'
+import { useAccountManager } from '@/hooks/account/useAccountManager'
 import { SignatureContextProps, ProviderProps } from '@/types'
 
 export const SignatureContext = createContext<SignatureContextProps | undefined>(undefined)

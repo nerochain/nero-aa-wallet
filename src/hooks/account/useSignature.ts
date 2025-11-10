@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { SignatureContext } from '@/contexts'
+import { SignatureContext } from '@/contexts/SignatureContext'
 import { SignatureContextProps } from '@/types'
 
 export const useSignature = (): SignatureContextProps => {

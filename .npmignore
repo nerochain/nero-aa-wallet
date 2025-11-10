@@ -1,0 +1,52 @@
+# Development files
+.env*
+.github/
+.husky/
+.storybook/
+.yarn/
+config/
+coverage/
+dist/app/bundle.js.map
+dist/types/
+examples/
+node_modules/
+public/
+src/
+storybook-static/
+temp/
+test/
+__tests__/
+
+# Config files
+*.config.js
+*.config.ts
+*.lock
+*.log
+
+# Keep only essential documentation for NPM
+*.md
+!README.md
+!CHANGELOG.md
+!LICENSE
+!INTEGRATION_GUIDE.md
+!API_REFERENCE.md
+
+# Scripts
+*.sh
+.prettierrc
+.prettierignore
+.eslintrc*
+tsconfig.json
+tsconfig.*.json
+!tsconfig.build.json
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# CI/CD
+.github/

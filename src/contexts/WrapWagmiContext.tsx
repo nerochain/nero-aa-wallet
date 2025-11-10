@@ -4,7 +4,7 @@ import { metaMaskWallet, bitgetWallet, gateWallet } from '@rainbow-me/rainbowkit
 import { defineChain } from 'viem'
 import { http, WagmiProvider } from 'wagmi'
 import { rainbowWeb3AuthConnector } from '@/config/rainbowWeb3authConnector'
-import { ConfigContext } from '@/contexts'
+import { ConfigContext } from './ConfigContext'
 
 interface WrapWagmiContextProps {
   entryPoint?: string

@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo } from 'react'
 import { NeroToEthAddressMap } from '@/config/NeroToEthAddressMap'
-import { useSignature, useTokenContracts, useCustomERC20Tokens } from '@/hooks'
+import { useSignature } from '@/hooks/account/useSignature'
+import { useTokenContracts } from './useTokenContracts'
+import { useCustomERC20Tokens } from './useCustomTokens'
 import { ERC20Token, ERC721Token } from '@/types'
 import { processTokenData, processNFTData } from '@/utils'
 

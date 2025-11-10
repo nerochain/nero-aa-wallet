@@ -1,6 +1,7 @@
 import useSWR from 'swr'
 import { formatTransaction } from '@/helper/formatTransaction'
-import { useSignature, useConfig } from '@/hooks'
+import { useSignature } from '@/hooks/account/useSignature'
+import { useConfig } from '@/hooks/operation/useConfig'
 import {
   TransactionListResponse,
   ActionType,

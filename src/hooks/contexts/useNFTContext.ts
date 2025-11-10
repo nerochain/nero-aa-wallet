@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { NFTContext } from '@/contexts'
+import { NFTContext } from '@/contexts/NFTContext'
 import { NFTContextType } from '@/types'
 
 export const useNFTContext = (): NFTContextType => {

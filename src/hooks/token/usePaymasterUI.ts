@@ -1,5 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
-import { useSupportedTokens, usePaymasterContext, useConfig } from '@/hooks'
+import { useSupportedTokens } from './useSupportedTokens'
+import { usePaymasterContext } from '@/hooks/contexts/usePaymasterContext'
+import { useConfig } from '@/hooks/operation/useConfig'
 import { PaymasterToken, PAYMASTER_MODE } from '@/types/Paymaster'
 
 export const usePaymasterUI = () => {

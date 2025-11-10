@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { useBalance } from 'wagmi'
-import { useSignature } from '@/hooks'
+import { useSignature } from '@/hooks/account/useSignature'
 import { SendContextProps, Token, ProviderProps } from '@/types'
 import { isValidAddress, formatAndRoundBalance, createNeroToken } from '@/utils'
 

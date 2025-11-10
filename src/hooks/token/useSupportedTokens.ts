@@ -1,6 +1,6 @@
 import { useContext, useState, useCallback, useRef } from 'react'
-import { ClientContext } from '@/contexts'
-import { useEthersSigner } from '@/hooks'
+import { ClientContext } from '@/contexts/ClientContext'
+import { useEthersSigner } from '@/hooks/account/useGetSigner'
 import { PaymasterToken, SponsorshipInfo } from '@/types'
 import { useBuilderWithPaymaster } from '@/utils'
 

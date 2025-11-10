@@ -1,1 +1,1 @@
-export declare const useConfig: () => import("../../types").ConfigContextProps;
+export declare const useConfig: () => import("../..").ConfigContextProps;

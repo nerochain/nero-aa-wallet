@@ -6,7 +6,10 @@ import { ConsolidationPreviewModal } from '@/components/features/AccountSelector
 import { ConsolidationProgressModal } from '@/components/features/AccountSelector/ConsolidationProgressModal'
 import { ClientContext } from '@/contexts'
 import { SimpleAccount } from '@/helper/simpleAccount'
-import { useAccountManager, useConfig, useClassifiedTokens, useEthersSigner } from '@/hooks'
+import { useAccountManager } from '@/hooks/account/useAccountManager'
+import { useConfig } from '@/hooks/operation/useConfig'
+import { useClassifiedTokens } from '@/hooks/token/useClassifiedTokens'
+import { useEthersSigner } from '@/hooks/account/useGetSigner'
 import {
   AccountConsolidationContextProps,
   AccountTokenBalances,

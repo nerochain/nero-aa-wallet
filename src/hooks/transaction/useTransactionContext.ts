@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { TransactionContext } from '@/contexts'
+import { TransactionContext } from '@/contexts/TransactionContext'
 import { TransactionContextProps } from '@/types'
 
 export const useTransactionContext = (): TransactionContextProps => {

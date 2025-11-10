@@ -1,1 +1,1 @@
-export declare const useAccountConsolidation: () => import("../../types").AccountConsolidationContextProps;
+export declare const useAccountConsolidation: () => import("../..").AccountConsolidationContextProps;

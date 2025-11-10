@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { ethers } from 'ethers'
 import getNftImgNameFromUri from '@/helper/getNftImgNameFromUri'
-import { useConfig, useCustomERC721Tokens } from '@/hooks'
+import { useConfig } from '@/hooks/operation/useConfig'
+import { useCustomERC721Tokens } from '@/hooks/token/useCustomTokens'
 import { CloudflareNftMetadata, NftWithImages } from '@/types'
 
 const fetchSingleNft = async (uri: string): Promise<CloudflareNftMetadata | null> => {

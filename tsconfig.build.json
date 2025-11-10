@@ -6,7 +6,6 @@
     "declarationDir": "./dist/types",
     "emitDeclarationOnly": true,
     "moduleResolution": "node",
-    // "rootDir": "./src",
     "jsx": "react-jsx",
     "strict": true,
     "allowSyntheticDefaultImports": true,
@@ -16,8 +15,17 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"]
   },
   "include": ["src/**/*", "src/abis/**/*.json", "src/**/*.css"],
-  "exclude": ["node_modules", "dist", "src/main.tsx"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/main.tsx",
+    "src/Sample.tsx",
+    "src/__tests__/**",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
 }

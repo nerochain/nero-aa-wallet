@@ -1,5 +1,6 @@
 import { useContext } from 'react'
-import { SendContext, SendContextProps } from '@/contexts'
+import { SendContext } from '@/contexts/SendContext'
+import { SendContextProps } from '@/types'
 
 export const useSendContext = (): SendContextProps => {
   const context = useContext(SendContext)

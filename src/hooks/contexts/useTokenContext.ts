@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { TokenContext } from '@/contexts'
+import { TokenContext } from '@/contexts/TokenContext'
 import { TokenContextType } from '@/types'
 
 export const useTokenContext = (): TokenContextType => {

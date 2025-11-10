@@ -1,12 +1,10 @@
 import { useContext } from 'react'
-import {
-  MultiSendContext,
-  NFTContext,
-  SendContext,
-  SendUserOpContext,
-  TokenContext,
-} from '@/contexts'
-import { usePaymasterContext } from '@/hooks'
+import { MultiSendContext } from '@/contexts/MultiSendContext'
+import { NFTContext } from '@/contexts/NFTContext'
+import { SendContext } from '@/contexts/SendContext'
+import { SendUserOpContext } from '@/contexts/SendUserOpContext'
+import { TokenContext } from '@/contexts/TokenContext'
+import { usePaymasterContext } from './usePaymasterContext'
 
 export const useResetContexts = () => {
   const sendContext = useContext(SendContext)

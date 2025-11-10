@@ -1,2 +1,2 @@
-import { SendContextProps } from '@/contexts';
+import { SendContextProps } from '@/types';
 export declare const useSendContext: () => SendContextProps;

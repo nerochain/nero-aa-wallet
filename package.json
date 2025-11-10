@@ -1,6 +1,26 @@
 {
-  "name": "nero-wallet",
-  "version": "0.0.0",
+  "name": "@nerochain-test/nero-wallet",
+  "version": "1.0.2",
+  "description": "A modern Account Abstraction (AA) wallet library for React applications with ERC-4337 support, social authentication, and gasless transactions",
+  "author": "NERO Chain",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nerochain/nero-aa-wallet.git"
+  },
+  "homepage": "https://nerochain.io",
+  "keywords": [
+    "ethereum",
+    "account-abstraction",
+    "erc-4337",
+    "wallet",
+    "web3",
+    "react",
+    "blockchain",
+    "nerochain",
+    "gasless-transactions",
+    "social-login"
+  ],
   "type": "module",
   "main": "./dist/app/bundle.js",
   "module": "./dist/app/bundle.js",
@@ -8,17 +28,25 @@
   "exports": {
     ".": {
       "import": "./dist/app/bundle.js",
-      "require": "./dist/app/bundle.cjs.js",
       "types": "./dist/types/index.d.ts"
     },
-    "./index.css": "./dist/app/style.css"
+    "./styles.css": "./dist/app/style.css"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "dev": "vite",
     "dev:demo": "vite --mode demo",
     "build": "ITE_USER_NODE_ENV=build tsc --project tsconfig.build.json && vite build --mode build",
     "build:demo": "vite build --mode demo",
     "build:env": "VITE_USER_NODE_ENV=build tsc --project tsconfig.build.json && vite build --mode build",
+    "prepublishOnly": "npm run build",
     "test": "vitest run --reporter=verbose src/__tests__/security-core.test.ts src/__tests__/utils-security.test.ts src/__tests__/storage-quota-component.test.ts",
     "test:watch": "vitest watch src/__tests__/security-core.test.ts src/__tests__/utils-security.test.ts",
     "test:coverage": "vitest run --coverage src/__tests__/security-core.test.ts src/__tests__/utils-security.test.ts",
@@ -37,10 +65,7 @@
   },
   "dependencies": {
     "@account-abstraction/contracts": "0.6.0",
-    "@eslint/compat": "^1.2.0",
     "@eth-optimism/contracts-ts": "^0.17.2",
-    "@rainbow-me/rainbowkit": "^2.1.3",
-    "@tanstack/react-query": "^5.50.1",
     "@web3auth/auth-adapter": "^9.0.2",
     "@web3auth/base": "^9.0.2",
     "@web3auth/ethereum-provider": "^9.0.2",
@@ -49,15 +74,30 @@
     "ethers": "5.7.2",
     "localforage": "^1.10.0",
     "qrcode.react": "^3.1.0",
+    "swr": "^2.2.5",
+    "userop": "https://github.com/nerochain/aa-userop-sdk.git#d33bde2ba69044a367464e8f00fe0c5839e640b3"
+  },
+  "peerDependencies": {
+    "@rainbow-me/rainbowkit": "^2.1.3",
+    "@tanstack/react-query": "^5.50.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "swr": "^2.2.5",
-    "userop": "https://github.com/nerochain/aa-userop-sdk.git#d33bde2ba69044a367464e8f00fe0c5839e640b3",
     "viem": "2.x",
     "wagmi": "^2.10.10"
   },
+  "peerDependenciesMeta": {
+    "@rainbow-me/rainbowkit": {
+      "optional": false
+    },
+    "@tanstack/react-query": {
+      "optional": false
+    }
+  },
   "devDependencies": {
+    "@eslint/compat": "^1.2.0",
+    "@rainbow-me/rainbowkit": "^2.1.3",
     "@storybook/react": "8.1.11",
+    "@tanstack/react-query": "^5.50.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -82,22 +122,17 @@
     "postcss": "^8.4.39",
     "prettier": "3.5.3",
     "process": "^0.11.10",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
     "storybook": "^8.1.11",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.2.2",
+    "viem": "2.x",
     "vite": "^5.3.1",
     "vite-plugin-node-polyfills": "^0.22.0",
     "vite-tsconfig-paths": "^4.3.2",
-    "vitest": "^3.1.4"
-  },
-  "peerDependencies": {
-    "@rainbow-me/rainbowkit": "^2.1.3",
-    "@tanstack/react-query": "^5.50.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "use-sync-external-store": "^1.2.0",
-    "viem": "2.x",
+    "vitest": "^3.1.4",
     "wagmi": "^2.10.10"
   },
   "lint-staged": {

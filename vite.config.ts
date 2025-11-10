@@ -48,7 +48,8 @@ export default defineConfig(({ mode }) => {
     ...commonConfig,
     build: {
       outDir: 'dist/app',
-      minify: false,
+      minify: true,
+      sourcemap: true,
       lib: {
         entry: resolve(__dirname, 'src/index.tsx'),
         name: 'NeroWallet',
@@ -56,16 +57,37 @@ export default defineConfig(({ mode }) => {
         formats: ['es'],
       },
       cssCodeSplit: false,
-      cssMinify: false,
+      cssMinify: true,
       rollupOptions: {
-        external: ['react', 'react-dom'],
+        external: [
+          'react',
+          'react-dom',
+          'react/jsx-runtime',
+          '@rainbow-me/rainbowkit',
+          '@tanstack/react-query',
+          'wagmi',
+          'viem',
+          // Note: ethers is NOT external - it's bundled to handle dependencies like 'userop'
+        ],
         output: {
           inlineDynamicImports: true,
+          preserveModules: false,
+          interop: 'auto',
+          assetFileNames: (assetInfo) => {
+            if (assetInfo.name === 'style.css') return 'style.css'
+            return assetInfo.name || 'assets/[name][extname]'
+          },
           globals: {
             react: 'React',
             'react-dom': 'ReactDOM',
+            'react/jsx-runtime': 'jsxRuntime',
           },
         },
+      },
+      commonjsOptions: {
+        include: [/node_modules/],
+        transformMixedEsModules: true,
+        esmExternals: ['ethers'],
       },
     },
   }

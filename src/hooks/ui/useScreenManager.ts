@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { ScreenManagerContext } from '@/contexts'
+import { ScreenManagerContext } from '@/contexts/ScreenManagerContext'
 
 export const useScreenManager = () => {
   const context = useContext(ScreenManagerContext)

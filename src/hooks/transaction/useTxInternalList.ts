@@ -1,5 +1,6 @@
 import useSWR from 'swr'
-import { useSignature, useConfig } from '@/hooks'
+import { useSignature } from '@/hooks/account/useSignature'
+import { useConfig } from '@/hooks/operation/useConfig'
 import { TxInternalListResponse } from '@/types'
 
 export function useTxInternalList() {

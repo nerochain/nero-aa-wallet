@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { usePaymasterContext } from '@/hooks'
+import { usePaymasterContext } from '@/hooks/contexts/usePaymasterContext'
 import { PaymasterModeValue, PAYMASTER_MODE } from '@/types/Paymaster'
 
 export const usePaymasterMode = (): {

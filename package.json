@@ -1,6 +1,6 @@
 {
-  "name": "@nerochain-test/nero-wallet",
-  "version": "1.0.2",
+  "name": "@nerochain/nero-wallet",
+  "version": "1.0.1",
   "description": "A modern Account Abstraction (AA) wallet library for React applications with ERC-4337 support, social authentication, and gasless transactions",
   "author": "NERO Chain",
   "license": "MIT",

@@ -62864,39 +62864,39 @@ const CACHE_DURATION = 60 * 1e3, useSupportedTokens = () => {
       return _0.current || (C0.current || i0(!0), c0(!1), d0(null), _0.current = (async () => {
         var W0, G0, U0, Y0, A0;
         try {
-          const f0 = async (I0, D0, P0, F0) => {
-            const k0 = await r0(I0, D0, P0);
-            if (!k0)
-              throw new Error(`Failed to initialize ${F0} builder`);
-            return k0;
+          const f0 = async (D0, P0, F0, k0) => {
+            const z0 = await r0(D0, P0, F0);
+            if (!z0)
+              throw new Error(`Failed to initialize ${k0} builder`);
+            return z0;
           }, [h0, g0] = await Promise.all([
             f0(!0, void 0, 0, "free gas"),
             f0(!0, void 0, 2, "token")
-          ]), m0 = async (I0) => await t0.getSupportedTokens(I0), [y0, E0] = await Promise.allSettled([
+          ]), m0 = async (D0) => await t0.getSupportedTokens(D0), [y0, E0] = await Promise.allSettled([
             m0(h0),
             m0(g0)
           ]), S0 = y0.status === "fulfilled" && y0.value.freeGas || !1;
           if (E0.status === "rejected")
             throw new Error(`Token API call failed: ${E0.reason}`);
-          const w0 = E0.value, l0 = w0.tokens || [], v0 = {
+          const w0 = E0.value, v0 = (w0.tokens || []).filter((D0) => D0.symbol !== "TST"), R0 = {
             balance: ((G0 = (W0 = w0.native) == null ? void 0 : W0.price) == null ? void 0 : G0.toString()) || "0",
             freeGas: S0
           };
-          b0(l0), x0(v0), o0(!0), C0.current = !0, N0.current = !1, T0.current = 0;
-          const R0 = {
-            tokens: l0,
-            sponsorship: v0,
+          b0(v0), x0(R0), o0(!0), C0.current = !0, N0.current = !1, T0.current = 0;
+          const I0 = {
+            tokens: v0,
+            sponsorship: R0,
             native: w0.native
           };
           M0.current = {
-            data: R0,
+            data: I0,
             timestamp: q0
           };
           try {
             h0 && ((U0 = h0.resetOp) == null || U0.call(h0)), g0 && ((Y0 = g0.resetOp) == null || Y0.call(g0));
           } catch {
           }
-          return R0;
+          return I0;
         } catch (f0) {
           console.error("Error fetching supported tokens:", f0), c0(!0), N0.current = !0, T0.current++;
           let h0 = "Failed to load payment options";
@@ -63622,7 +63622,7 @@ const use = React__default.use || // This extra generic is to avoid TypeScript m
             ..._0,
             logo: (C0 == null ? void 0 : C0.icon) || _0.logo
           };
-        });
+        }).filter((_0) => _0.symbol !== "TST");
         e0($0);
         const x0 = await processNFTData(u0, c0);
         n0(x0);
@@ -80210,35 +80210,6 @@ function App({ mode: t0 }) {
     )
   ] }) });
 }
-function setupNeroWalletPolyfills() {
-  if (typeof globalThis.global > "u" && (globalThis.global = globalThis), typeof globalThis.process > "u" && (globalThis.process = {
-    env: {},
-    version: "v16.0.0",
-    versions: { node: "16.0.0" },
-    nextTick: (t0, ...e0) => Promise.resolve().then(() => t0(...e0)),
-    once: (t0, e0) => e0,
-    on: () => {
-    },
-    off: () => {
-    },
-    removeListener: () => {
-    },
-    removeAllListeners: () => {
-    },
-    emit: () => {
-    },
-    binding: () => {
-      throw new Error("process.binding is not supported");
-    },
-    cwd: () => "/",
-    chdir: () => {
-    }
-  }), typeof globalThis.Buffer > "u")
-    try {
-      globalThis.Buffer = require("buffer").Buffer;
-    } catch {
-    }
-}
 const SocialWallet = ({
   config: t0,
   zIndex: e0 = 9999,
@@ -96253,7 +96224,6 @@ const index = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePropert
 }, Symbol.toStringTag, { value: "Module" }));
 export {
   SocialWallet,
-  setupNeroWalletPolyfills,
   useAAtransfer,
   useAccountConsolidation,
   useAccountManager,

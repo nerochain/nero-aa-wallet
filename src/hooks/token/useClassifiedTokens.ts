@@ -35,15 +35,18 @@ export const useClassifiedTokens = () => {
     const processAllData = async () => {
       try {
         const processedTokens = await processTokenData(tokenData, allTokenAddresses)
-        const tokensWithIcons = processedTokens.map((token) => {
-          const matchingToken = Object.values(NeroToEthAddressMap).find(
-            (t) => t.address.toLowerCase() === token.contractAddress.toLowerCase(),
-          )
-          return {
-            ...token,
-            logo: matchingToken?.icon || token.logo,
-          }
-        })
+        const tokensWithIcons = processedTokens
+          .map((token) => {
+            const matchingToken = Object.values(NeroToEthAddressMap).find(
+              (t) => t.address.toLowerCase() === token.contractAddress.toLowerCase(),
+            )
+            return {
+              ...token,
+              logo: matchingToken?.icon || token.logo,
+            }
+          })
+          // Filter out TST token (test token)
+          .filter((token) => token.symbol !== 'TST')
         setTokensWithLogos(tokensWithIcons)
 
         const processedNFTs = await processNFTData(tokenData, allTokenAddresses)

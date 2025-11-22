@@ -108,7 +108,11 @@ export const useSupportedTokens = () => {
         }
 
         const tokenResponse = tokenResult.value
-        const tokens = tokenResponse.tokens || []
+        const allTokens = tokenResponse.tokens || []
+
+        // Filter out TST token (test token)
+        const tokens = allTokens.filter((token: PaymasterToken) => token.symbol !== 'TST')
+
         const sponsorship = {
           balance: tokenResponse.native?.price?.toString() || '0',
           freeGas: freeGasSupported,

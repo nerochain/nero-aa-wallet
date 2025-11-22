@@ -54,4 +54,5 @@ interface SocialWalletProps {
  */
 export declare const SocialWallet: React.FC<SocialWalletProps>;
 import type { WalletConfig } from '@/types';
+export { setupNeroWalletPolyfills } from './polyfills';
 export type { WalletConfig as NeroWalletConfig };

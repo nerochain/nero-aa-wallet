@@ -23,14 +23,23 @@ A modern **ERC-4337 Account Abstraction** wallet library with built-in UI, socia
 
 ### 1. Install
 
+**Base installation (MetaMask support):**
+
 ```bash
 npm install @nerochain-test/nero-wallet @rainbow-me/rainbowkit @tanstack/react-query viem wagmi
 ```
 
-<details>
-<summary>📦 Using Vite? Click here for required setup</summary>
+**Optional: Add social login (Google, Facebook, Discord):**
 
-Install polyfills plugin:
+```bash
+npm install @web3auth/modal @web3auth/auth-adapter @web3auth/base @web3auth/ethereum-provider @web3auth/web3auth-wagmi-connector
+```
+
+> 💡 **Just install and forget!** The wallet automatically detects Web3Auth and handles all initialization. No additional code needed.
+
+### ⚠️ **REQUIRED for Vite Users**
+
+Install and configure Node.js polyfills (required for blockchain dependencies):
 
 ```bash
 npm install --save-dev vite-plugin-node-polyfills
@@ -44,15 +53,23 @@ import react from '@vitejs/plugin-react'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
-  plugins: [react(), nodePolyfills()],
+  plugins: [
+    react(),
+    nodePolyfills({
+      protocolImports: true,
+      globals: {
+        Buffer: true,
+        global: true,
+        process: true,
+      },
+    }),
+  ],
   define: {
     'process.env': {},
     global: 'globalThis',
   },
 })
 ```
-
-</details>
 
 ### 2. Create Configuration File
 

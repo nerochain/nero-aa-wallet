@@ -112,7 +112,22 @@ export const rainbowWeb3AuthConnector = ({
         },
       })
 
-      web3AuthInstance.configureAdapter(web3AuthAdapterInstance)
+      try {
+        web3AuthInstance.configureAdapter(web3AuthAdapterInstance)
+
+        // Initialize the modal - CRITICAL for modal to appear!
+        web3AuthInstance.initModal().catch((error) => {
+          console.error('[NERO Wallet] Failed to initialize Web3Auth modal:', error)
+        })
+      } catch (error) {
+        console.error(
+          '[NERO Wallet] Failed to configure Web3Auth adapter. Ensure all Web3Auth packages are version-compatible:',
+          error,
+        )
+        console.error(
+          '[NERO Wallet] Required versions: @web3auth/modal@9.1.0, @web3auth/auth-adapter@9.0.2, @web3auth/base@9.0.2, @web3auth/ethereum-provider@9.0.2, @web3auth/web3auth-wagmi-connector@7.0.0',
+        )
+      }
 
       return createWagmiConnector((config) => ({
         ...Web3AuthConnector({

@@ -67,12 +67,52 @@ export default defineConfig(({ mode }) => {
           '@tanstack/react-query',
           'wagmi',
           'viem',
-          // Note: ethers is NOT external - it's bundled to handle dependencies like 'userop'
+          // Web3Auth packages - externalized so modal can render properly
+          '@web3auth/auth-adapter',
+          '@web3auth/base',
+          '@web3auth/ethereum-provider',
+          '@web3auth/modal',
+          '@web3auth/web3auth-wagmi-connector',
+          // Note: ethers is bundled with polyfills injected
         ],
         output: {
           inlineDynamicImports: true,
           preserveModules: false,
           interop: 'auto',
+          // Inject polyfills BEFORE any imports - using intro instead of banner
+          intro: `
+(function() {
+  if (typeof globalThis.global === 'undefined') {
+    globalThis.global = globalThis;
+  }
+  if (typeof globalThis.process === 'undefined') {
+    globalThis.process = {
+      env: {},
+      version: 'v16.0.0',
+      versions: { node: '16.0.0' },
+      nextTick: function(fn) {
+        return Promise.resolve().then(fn);
+      },
+      once: function(event, handler) {
+        return handler;
+      },
+      on: function() {},
+      off: function() {},
+      removeListener: function() {},
+      removeAllListeners: function() {},
+      emit: function() {},
+      binding: function() { throw new Error('process.binding is not supported'); },
+      cwd: function() { return '/'; },
+      chdir: function() {}
+    };
+  }
+  if (typeof globalThis.Buffer === 'undefined' && typeof window !== 'undefined') {
+    try {
+      globalThis.Buffer = require('buffer').Buffer;
+    } catch (e) {}
+  }
+})();
+          `,
           assetFileNames: (assetInfo) => {
             if (assetInfo.name === 'style.css') return 'style.css'
             return assetInfo.name || 'assets/[name][extname]'
@@ -87,7 +127,12 @@ export default defineConfig(({ mode }) => {
       commonjsOptions: {
         include: [/node_modules/],
         transformMixedEsModules: true,
-        esmExternals: ['ethers'],
+        esmExternals: true,
+        requireReturnsDefault: (id) => {
+          // Ethers v5 is pure ESM - no default export
+          if (id === 'ethers') return false
+          return 'auto'
+        },
       },
     },
   }

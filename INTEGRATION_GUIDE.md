@@ -53,16 +53,23 @@ cd my-nero-dapp
 
 ### Step 2: Install NERO Wallet and Dependencies
 
+**Base installation (MetaMask + other wallet connectors):**
+
 ```bash
 # Install the NERO Wallet package
 npm install @nerochain-test/nero-wallet
 
 # Install required peer dependencies
 npm install react react-dom @rainbow-me/rainbowkit @tanstack/react-query viem wagmi
-
-# Install RainbowKit styles
-npm install @rainbow-me/rainbowkit
 ```
+
+**Optional: Add social login (Google, Facebook, Discord):**
+
+```bash
+npm install @web3auth/modal @web3auth/auth-adapter @web3auth/base @web3auth/ethereum-provider @web3auth/web3auth-wagmi-connector
+```
+
+> 💡 **Just install and forget!** The wallet automatically detects and initializes Web3Auth. No additional code or imports needed. MetaMask works without these packages.
 
 ### Step 3: Configure Vite (If Using Vite)
 
@@ -190,6 +197,10 @@ Update `src/App.tsx`:
 import { SocialWallet } from '@nerochain-test/nero-wallet'
 import '@nerochain-test/nero-wallet/styles.css'
 import '@rainbow-me/rainbowkit/styles.css'
+
+// 🚨 CRITICAL for social login: Import Web3Auth CSS so modal appears
+import '@web3auth/base/dist/esm/index.css'
+
 import { walletConfig } from './walletConfig'
 
 function App() {
@@ -232,6 +243,8 @@ Already have a React project? Follow these steps to add NERO Wallet to it.
 
 ### Step 1: Install NERO Wallet
 
+**Base installation (MetaMask + other wallet connectors):**
+
 ```bash
 # Install the package
 npm install @nerochain-test/nero-wallet
@@ -239,6 +252,14 @@ npm install @nerochain-test/nero-wallet
 # Install peer dependencies (if not already installed)
 npm install @rainbow-me/rainbowkit @tanstack/react-query viem wagmi
 ```
+
+**Optional: Add social login (Google, Facebook, Discord):**
+
+```bash
+npm install @web3auth/modal @web3auth/auth-adapter @web3auth/base @web3auth/ethereum-provider @web3auth/web3auth-wagmi-connector
+```
+
+> 💡 **Just install and forget!** The wallet automatically detects and initializes Web3Auth. No additional code or imports needed. MetaMask works without these packages.
 
 ### Step 2: Check Your Build Configuration
 
@@ -430,6 +451,10 @@ Update your main app component (e.g., `src/App.tsx` or `src/App.jsx`):
 import { SocialWallet } from '@nerochain-test/nero-wallet'
 import '@nerochain-test/nero-wallet/styles.css'
 import '@rainbow-me/rainbowkit/styles.css'
+
+// 🚨 CRITICAL for social login: Import Web3Auth CSS so modal appears
+import '@web3auth/base/dist/esm/index.css'
+
 import { walletConfig } from './config/walletConfig'
 
 // Your existing components
@@ -813,17 +838,41 @@ The NERO Wallet provides several React hooks for accessing wallet functionality:
 
 ### Common Issues
 
-#### Issue 1: "Module not found: Can't resolve 'buffer'"
+#### Issue 1: "Cannot read properties of undefined (reading 'bind')" or "end-of-stream" errors
 
-**Solution:** Install node polyfills:
+**Cause:** Missing Node.js polyfills for blockchain dependencies (ethers.js).
+
+**Solution:** This is **REQUIRED** for Vite projects. Install node polyfills:
 
 ```bash
 npm install --save-dev vite-plugin-node-polyfills
 ```
 
-Update `vite.config.ts` as shown in the configuration section.
+Update `vite.config.ts`:
 
-#### Issue 2: "process is not defined"
+```typescript
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
+
+export default defineConfig({
+  plugins: [react(), nodePolyfills()],
+  define: {
+    'process.env': {},
+    global: 'globalThis',
+  },
+})
+```
+
+#### Issue 2: "Module not found: Can't resolve 'buffer'"
+
+**Solution:** Install node polyfills (same as Issue 1):
+
+```bash
+npm install --save-dev vite-plugin-node-polyfills
+```
+
+Update `vite.config.ts` as shown above.
+
+#### Issue 3: "process is not defined"
 
 **Solution:** Add to your Vite config:
 
@@ -878,7 +927,26 @@ import '@rainbow-me/rainbowkit/styles.css'
 3. Copy the Project ID
 4. Update your wallet config or `.env` file
 
-#### Issue 6: Web3Auth not working
+#### Issue 6: Web3Auth modal doesn't appear (stuck on "Opening NERO wallet...")
+
+**Cause:** Missing Web3Auth CSS import.
+
+**Solution:** Add this import to your `App.tsx`:
+
+```typescript
+import '@web3auth/base/dist/esm/index.css'
+```
+
+Full example:
+
+```typescript
+import { SocialWallet } from '@nerochain-test/nero-wallet'
+import '@nerochain-test/nero-wallet/styles.css'
+import '@rainbow-me/rainbowkit/styles.css'
+import '@web3auth/base/dist/esm/index.css' // Add this!
+```
+
+#### Issue 7: Web3Auth not working
 
 **Solution:** Check your Web3Auth configuration:
 

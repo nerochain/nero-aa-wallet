@@ -3,8 +3,8 @@ import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 import { metaMaskWallet, bitgetWallet, gateWallet } from '@rainbow-me/rainbowkit/wallets'
 import { defineChain } from 'viem'
 import { http, WagmiProvider } from 'wagmi'
-import { rainbowWeb3AuthConnector } from '@/config/rainbowWeb3authConnector'
 import { ConfigContext } from './ConfigContext'
+import { rainbowWeb3AuthConnector } from '@/config/rainbowWeb3authConnector'
 
 interface WrapWagmiContextProps {
   entryPoint?: string
@@ -65,22 +65,25 @@ export const WrapWagmiProvider: React.FC<WrapWagmiContextProps> = ({ children })
     },
   })
 
-  const NEROWallet = rainbowWeb3AuthConnector({
-    chain: neroChain,
-    walletConfig: {
-      name: walletName,
-      networkType: networkType,
-      logo: walletLogo,
-      walletBackground,
-      clientId,
-      uiConfig: {
-        ...uiConfig,
-        uxMode: 'redirect',
-        modalZIndex: '2147483647',
-      },
-      loginConfig,
-    },
-  })
+  // Create Web3Auth connector only if configured
+  const NEROWallet = config?.hasWeb3AuthConfig
+    ? rainbowWeb3AuthConnector({
+        chain: neroChain,
+        walletConfig: {
+          name: walletName,
+          networkType: networkType,
+          logo: walletLogo,
+          walletBackground,
+          clientId,
+          uiConfig: {
+            ...uiConfig,
+            uxMode: 'redirect',
+            modalZIndex: '2147483647',
+          },
+          loginConfig,
+        },
+      })
+    : null
 
   const wagmiConfig = getDefaultConfig({
     appName: uiConfig.appName,
@@ -92,12 +95,7 @@ export const WrapWagmiProvider: React.FC<WrapWagmiContextProps> = ({ children })
     wallets: [
       {
         groupName: 'Recommended',
-        wallets: [
-          ...(config?.hasWeb3AuthConfig ? [NEROWallet] : []),
-          metaMaskWallet,
-          bitgetWallet,
-          gateWallet,
-        ],
+        wallets: [...(NEROWallet ? [NEROWallet] : []), metaMaskWallet, bitgetWallet, gateWallet],
       },
     ],
   })

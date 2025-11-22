@@ -1,6 +1,7 @@
 import daiIcon from '@/assets/tokens/dai.svg'
 import usdcIcon from '@/assets/tokens/usdc.svg'
 import usdtIcon from '@/assets/tokens/usdt.svg'
+import jpycIcon from '@/assets/tokens/jpyc.png'
 
 export const NeroToEthAddressMap: Record<string, { address: string; icon: string }> = {
   DAI: {
@@ -14,5 +15,9 @@ export const NeroToEthAddressMap: Record<string, { address: string; icon: string
   USDC: {
     address: '0xC86Fed58edF0981e927160C50ecB8a8B05B32fed',
     icon: usdcIcon,
+  },
+  JPYC: {
+    address: '0x4279d665ee905c21ff55799ffbe1be3d4a3da024',
+    icon: jpycIcon,
   },
 }

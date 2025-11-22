@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.13] - 2024-11-22
+
+### Added
+
+- **JPYC token support**: Added JPYC token icon and contract address mapping
+  - Contract: `0x4279d665ee905c21ff55799ffbe1be3d4a3da024`
+  - Users will now see the JPYC logo when importing or viewing this token
+
 ## [1.0.12] - 2024-11-22
 
 ### Fixed
